@@ -13,64 +13,6 @@ shortest_paths::~shortest_paths() {
                 
 }
 
-void shortest_paths::one_to_many( graph_access & G, NodeID & source, std::vector< double > & desired_distances, std::vector< double > & distances) {
-        // dijktras algorithm starting from source
-        forall_nodes(G, node) {
-                distances[node] = std::numeric_limits< double >::max();
-        } endfor
-        distances[source] = 0;
-
-        minNodeHeap queue;
-        queue.insert(source, 0); 
-
-        while( !queue.empty() ) {
-
-                // settle node
-                NodeID node = queue.deleteMin();
-
-                forall_out_edges(G, e, node) {
-                        NodeID target = G.getEdgeTarget(e);
-                        if( distances[node] + desired_distances[e] < distances[target] ) {
-                                distances[target] = distances[node] + desired_distances[e];
-                                if( queue.contains( target ) ) {
-                                        queue.decreaseKey( target, distances[target] );
-                                } else {
-                                        queue.insert( target, distances[target] );
-                                }
-                        }
-                } endfor
-         }
-}
-
-void shortest_paths::one_to_many( graph_access & G, NodeID & source, std::vector< double > & distances) {
-        // dijktras algorithm starting from source
-        forall_nodes(G, node) {
-                distances[node] = std::numeric_limits< double >::max();
-        } endfor
-        distances[source] = 0;
-
-        minNodeHeap queue;
-        queue.insert(source, 0); 
-
-        while( !queue.empty() ) {
-
-                // settle node
-                NodeID node = queue.deleteMin();
-
-                forall_out_edges(G, e, node) {
-                        NodeID target = G.getEdgeTarget(e);
-                        if( distances[node] + G.getEdgeWeight(e) < distances[target] ) {
-                                distances[target] = distances[node] + G.getEdgeWeight(e);
-                                if( queue.contains( target ) ) {
-                                        queue.decreaseKey( target, distances[target] );
-                                } else {
-                                        queue.insert( target, distances[target] );
-                                }
-                        }
-                } endfor
-         }
-}
-
 void shortest_paths::one_to_many_unit_weight( graph_access & G, NodeID & source, std::vector< int > & distances) {
         // perform a BFS to compute the distance from source to all other vertices
         distances.resize( G.number_of_nodes() ); 

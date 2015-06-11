@@ -14,15 +14,10 @@ public:
 
         void print_distances( graph_access & G);
 
-        double full_stress_measure( graph_access & G, std::vector< double > & desired_distances );
-        double full_stress_measure( graph_access & G );
         double full_stress_measure_unit_weight( graph_access & G );
         double maxent_unitweight( graph_access & G, double q, double alpha, std::string prefix );
         double maxent_unitweight( graph_access & G, double q, double alpha );
         double avg_infeasibility_per_edge( graph_access & G );
-
-        double compute_fsm_scaling_factor( graph_access & G, std::vector< double > & desired_distances );
-        double compute_fsm_scaling_factor( graph_access & G ); 
         double compute_fsm_scaling_factor_unit_weight( graph_access & G ); 
 };
 

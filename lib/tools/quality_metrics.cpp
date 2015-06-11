@@ -26,39 +26,11 @@ void quality_metrics::print_distances( graph_access & G) {
         } endfor
 }
 
-//TODO devide all values here by 2 before release
-double quality_metrics::full_stress_measure( graph_access & G, std::vector< double > & desired_distances ) {
-        double energy = 0;
-        double scaling_factor = compute_fsm_scaling_factor(G, desired_distances);
-        forall_nodes_parallel_reduce(G, source,+,energy) {
-                // perform a BFS to compute the distance from source to all other vertices
-	        shortest_paths sp;
-	        std::vector<double> deepth(G.number_of_nodes(), -1);
-                sp.one_to_many(G, source, desired_distances, deepth);
-
-                forall_nodes(G, target) {
-                        double diffX       = G.getX(source) - G.getX(target);
-                        double diffY       = G.getY(source) - G.getY(target);
-                        double dist_square = diffX*diffX+diffY*diffY;
-                        double dist        = sqrt(dist_square);
-
-                        double best_distance = deepth[target];
-                        if( best_distance == 0 ) continue;
-                        energy += (scaling_factor*dist - best_distance)*(scaling_factor*dist - best_distance)/(best_distance*best_distance);
-                } endfor
-        } endfor
-
-        return energy;
-}
 double quality_metrics::maxent_unitweight( graph_access & G, double q, double alpha, std::string prefix ) {
         double energy  = 0;
         double entropy = 0;
 
         forall_nodes_parallel_reduce(G, source, +, entropy) {
-	        shortest_paths sp;
-	        std::vector<double> deepth(G.number_of_nodes(), -1);
-                sp.one_to_many(G, source, deepth);
-
                 forall_nodes(G, target) {
                         if(source == target) continue;
 
@@ -116,10 +88,6 @@ double quality_metrics::maxent_unitweight( graph_access & G, double q, double al
         double entropy = 0;
 
         forall_nodes_parallel_reduce(G, source, +, entropy) {
-	        shortest_paths sp;
-	        std::vector<double> deepth(G.number_of_nodes(), -1);
-                sp.one_to_many(G, source, deepth);
-
                 forall_nodes(G, target) {
                         if(source == target) continue;
 
@@ -168,31 +136,7 @@ double quality_metrics::maxent_unitweight( graph_access & G, double q, double al
         std::cout <<  "alpha is " << std::setprecision(4) <<  alpha  << std::endl;
 
         energy -= alpha*entropy;
-        return energy;
-}
-
-double quality_metrics::full_stress_measure( graph_access & G ) {
-        double energy = 0;
-        double scaling_factor = compute_fsm_scaling_factor(G);
-        forall_nodes_parallel_reduce(G, source,+,energy) {
-                // perform a BFS to compute the distance from source to all other vertices
-	        shortest_paths sp;
-	        std::vector<double> deepth(G.number_of_nodes(), -1);
-                sp.one_to_many(G, source, deepth);
-
-                forall_nodes(G, target) {
-                        double diffX       = G.getX(source) - G.getX(target);
-                        double diffY       = G.getY(source) - G.getY(target);
-                        double dist_square = diffX*diffX+diffY*diffY;
-                        double dist        = sqrt(dist_square);
-
-                        int best_distance = deepth[target];
-                        if( best_distance == 0 ) continue;
-                        energy += (scaling_factor*dist - best_distance)*(scaling_factor*dist - best_distance)/(best_distance*best_distance);
-                } endfor
-        } endfor
-
-        return energy;
+        return energy/2;
 }
 
 double quality_metrics::full_stress_measure_unit_weight( graph_access & G ) {
@@ -200,7 +144,6 @@ double quality_metrics::full_stress_measure_unit_weight( graph_access & G ) {
         double scaling_factor = compute_fsm_scaling_factor_unit_weight(G);
         std::cout <<  "scaling factor is " << scaling_factor  << std::endl;
         forall_nodes_parallel_reduce(G, source,+,energy) {
-                // perform a BFS to compute the distance from source to all other vertices
 	        shortest_paths sp;
 	        std::vector<int> deepth(G.number_of_nodes(), -1);
                 sp.one_to_many_unit_weight(G, source, deepth);
@@ -217,107 +160,13 @@ double quality_metrics::full_stress_measure_unit_weight( graph_access & G ) {
                 } endfor
         } endfor
 
-        return energy;
+        return energy/2;
 }
-
-double quality_metrics::compute_fsm_scaling_factor( graph_access & G ) {
-        double top_fraction    = 0;
-        double bottom_fraction = 0;
-        forall_nodes_parallel_reduce(G, source,+,top_fraction) {
-                // perform a BFS to compute the distance from source to all other vertices
-                shortest_paths sp;
-	        std::vector<double> deepth(G.number_of_nodes(), -1);
-                sp.one_to_many(G, source, deepth);
-
-                forall_nodes(G, target) {
-                        double diffX       = G.getX(source) - G.getX(target);
-                        double diffY       = G.getY(source) - G.getY(target);
-                        double dist_square = diffX*diffX+diffY*diffY;
-                        double dist        = sqrt(dist_square);
-
-                        double best_distance = deepth[target];
-                        if( best_distance == 0 ) continue;
-                        top_fraction += (dist / best_distance);
-
-                } endfor
-        } endfor
-
-        forall_nodes_parallel_reduce(G, source,+,bottom_fraction) {
-                // perform a BFS to compute the distance from source to all other vertices
-                shortest_paths sp;
-	        std::vector<double> deepth(G.number_of_nodes(), -1);
-                sp.one_to_many(G, source, deepth);
-
-                forall_nodes(G, target) {
-                        double diffX       = G.getX(source) - G.getX(target);
-                        double diffY       = G.getY(source) - G.getY(target);
-                        double dist_square = diffX*diffX+diffY*diffY;
-                        double dist        = sqrt(dist_square);
-
-                        double best_distance = deepth[target];
-                        if( best_distance == 0 ) continue;
-                        bottom_fraction += (dist*dist) / (best_distance*best_distance);
-
-                } endfor
-        } endfor
-
-
-        return top_fraction/bottom_fraction;
-}
-
-double quality_metrics::compute_fsm_scaling_factor( graph_access & G, std::vector< double > & desired_distances ) {
-        double top_fraction    = 0;
-        double bottom_fraction = 0;
-        forall_nodes_parallel_reduce(G, source,+,top_fraction) {
-                // perform a BFS to compute the distance from source to all other vertices
-                shortest_paths sp;
-	        std::vector<double> deepth(G.number_of_nodes(), -1);
-                sp.one_to_many(G, source, desired_distances, deepth);
-
-                forall_nodes(G, target) {
-                        double diffX       = G.getX(source) - G.getX(target);
-                        double diffY       = G.getY(source) - G.getY(target);
-                        double dist_square = diffX*diffX+diffY*diffY;
-                        double dist        = sqrt(dist_square);
-
-                        double best_distance = deepth[target];
-                        if( best_distance == 0 ) continue;
-                        top_fraction += (dist / best_distance);
-
-                } endfor
-        } endfor
-
-        forall_nodes_parallel_reduce(G, source,+,bottom_fraction) {
-                // perform a BFS to compute the distance from source to all other vertices
-                shortest_paths sp;
-	        std::vector<double> deepth(G.number_of_nodes(), -1);
-                sp.one_to_many(G, source, desired_distances, deepth);
-
-                forall_nodes(G, target) {
-                        double diffX       = G.getX(source) - G.getX(target);
-                        double diffY       = G.getY(source) - G.getY(target);
-                        double dist_square = diffX*diffX+diffY*diffY;
-                        double dist        = sqrt(dist_square);
-
-                        double best_distance = deepth[target];
-                        if( best_distance == 0 ) continue;
-                        bottom_fraction += (dist*dist) / (best_distance*best_distance);
-
-                } endfor
-        } endfor
-
-
-        return top_fraction/bottom_fraction;
-}
-
-
-
 
 double quality_metrics::compute_fsm_scaling_factor_unit_weight( graph_access & G ) {
         double top_fraction    = 0;
         double bottom_fraction = 0;
         forall_nodes_parallel_reduce(G, source,+,top_fraction) {
-                // perform a BFS to compute the distance from source to all other vertices
                 shortest_paths sp;
 	        std::vector<int> deepth(G.number_of_nodes(), -1);
                 sp.one_to_many_unit_weight(G, source, deepth);
@@ -336,7 +185,6 @@ double quality_metrics::compute_fsm_scaling_factor_unit_weight( graph_access & G
         } endfor
 
         forall_nodes_parallel_reduce(G, source,+,bottom_fraction) {
-                // perform a BFS to compute the distance from source to all other vertices
                 shortest_paths sp;
 	        std::vector<int> deepth(G.number_of_nodes(), -1);
                 sp.one_to_many_unit_weight(G, source, deepth);

@@ -58,7 +58,7 @@ def GetEnvironment():
     print 'Illegal value for variant: %s' % env['variant']
     sys.exit(1)
   
-  if not env['program'] in ['drawit','graphchecker','evaluator','draw_from_coordinates']:
+  if not env['program'] in ['kadraw','graphchecker','evaluator','draw_from_coordinates']:
     print 'Illegal value for program: %s' % env['program']
     sys.exit(1)
 

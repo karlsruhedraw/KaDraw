@@ -41,7 +41,6 @@ libdrawit_files = [   'lib/data_structure/graph_hierarchy.cpp',
                       'lib/tools/random_functions.cpp',
                       'lib/tools/graph_extractor.cpp',
                       'lib/tools/quality_metrics.cpp',
-                      'lib/tools/dynamize_graph.cpp',
                       'lib/drawing/coarsening/coarsening.cpp',
                       'lib/drawing/coarsening/contraction.cpp',
                       'lib/drawing/coarsening/edge_rating/edge_ratings.cpp',
@@ -61,8 +60,8 @@ libdrawit_files = [   'lib/data_structure/graph_hierarchy.cpp',
                   ]
 
 
-if env['program'] == 'drawit':
-        env.Program('drawit', ['app/drawit.cpp']+libdrawit_files, LIBS=['libargtable2','gomp','cairo'])
+if env['program'] == 'kadraw':
+        env.Program('kadraw', ['app/kadraw.cpp']+libdrawit_files, LIBS=['libargtable2','gomp','cairo'])
 
 if env['program'] == 'evaluator':
         env.Append(CXXFLAGS = '-DMODE_EVALUATOR')

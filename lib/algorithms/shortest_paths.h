@@ -13,8 +13,6 @@ public:
         shortest_paths();
         virtual ~shortest_paths();
 
-        void one_to_many( graph_access & G, NodeID & source, std::vector< double > & distances);
-        void one_to_many( graph_access & G, NodeID & source, std::vector< double > & desired_distances, std::vector< double > & distances);
         void one_to_many_unit_weight( graph_access & G, NodeID & source, std::vector< int > & distances);
 };
 
