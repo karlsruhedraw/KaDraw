@@ -37,84 +37,21 @@ local_optimizer::~local_optimizer() {
 }
 
 void local_optimizer::run_maxent_optimization( const Config & config, 
-                                               graph_access & G, 
-                                               graph_access * coarser_graph, 
-                                               CoarseMapping* coarse_mapping ) {
+                graph_access & G, 
+                graph_access * coarser_graph, 
+                CoarseMapping* coarse_mapping ) {
         Config cfg = config;
-        if( config.draw_cluster_first ) {
-                 graph_extractor gext;
-                 std::vector< graph_access > subgraphs; 
-                 std::vector< std::vector< NodeID > > mapping; 
 
-                 gext.extract_all_blocks( G, subgraphs, mapping);
-
-                 //draw each of the clusters independently
-                 #pragma omp parallel for 
-                 for( unsigned int block = 0; block < G.get_partition_count(); block++) {
-                       
-                        std::vector< NodeID > old_x(subgraphs[block].number_of_nodes());
-                        // compute old  balances
-                        CoordType X_bar = 0; CoordType Y_bar = 0;
-                        forall_nodes(subgraphs[block], node) {
-                                X_bar += subgraphs[block].getX(node);
-                                old_x[node] = subgraphs[block].getX(node);
-                                Y_bar += subgraphs[block].getY(node);
-                        } endfor
-                        X_bar /= subgraphs[block].number_of_nodes();
-                        Y_bar /= subgraphs[block].number_of_nodes();
-
-                        cfg.maxent_tol = 0.0000000001;
-                        run_maxent_optimization_internal( cfg, subgraphs[block]);
-
-                        scale_graph_coordinates(cfg, block, subgraphs[block], coarser_graph);
-
-                        // compute new balance point and then shift
-                        CoordType X = 0; CoordType Y = 0;
-                        forall_nodes(subgraphs[block], node) {
-                                X += subgraphs[block].getX(node);
-                                Y += subgraphs[block].getY(node);
-                        } endfor
-
-                        X /= subgraphs[block].number_of_nodes();
-                        Y /= subgraphs[block].number_of_nodes();
-
-                        CoordType shift_X = X_bar - X;
-                        CoordType shift_Y = Y_bar - Y;
-
-                        forall_nodes(subgraphs[block], node) {
-                                NodeID original_node = mapping[block][node];
-                                G.setCoords(original_node, subgraphs[block].getX(node) + shift_X,  subgraphs[block].getY(node) + shift_Y);
-                        } endfor
-                 }
-        }
-        
         if( !(config.draw_cluster_first_disable_fine_tune && config.last_level) ) {
                 if(config.faster_drawing) {
                         // use version that approximates repulsive forces 
-                        if( config.use_two_hop ) {
-                                std::cout <<  "two hop not supported yet for faster drawing."  << std::endl;
-                                exit(0);
-                        } else {
-                                if( coarser_graph == NULL) {
-                                        run_maxent_optimization_internal( config, G);
-                                } else {
-                                        run_maxent_optimization_internal_fast_approx( config, G, *coarser_graph, coarse_mapping);
-                                }
-                        }
- 
-                } else {
-                        // use n^2 version
-                        if( config.use_two_hop ) {
-                                graph_access Q;
-                                construct_two_hop(G, Q);
-                                run_maxent_optimization_internal( config, Q);
-
-                                forall_nodes_parallel(Q, node) {
-                                        G.setCoords(node, Q.getX(node), Q.getY(node));
-                                } endfor
-                        } else {
+                        if( coarser_graph == NULL) {
                                 run_maxent_optimization_internal( config, G);
+                        } else {
+                                run_maxent_optimization_internal_fast_approx( config, G, *coarser_graph, coarse_mapping);
                         }
+                } else {
+                        run_maxent_optimization_internal( config, G);
                 }
         }
 }
@@ -250,7 +187,7 @@ void local_optimizer::run_maxent_optimization_internal_fast_approx( const Config
                 }
                 cluster_vertex_count[cluster_id] = cluster_size;
         } endfor
-        
+
         for( int i = 0; i < config.maxent_outer_iterations; i++) {
                 CoordType norm_coords = 0;
                 CoordType norm_diff = 0;
@@ -260,7 +197,7 @@ void local_optimizer::run_maxent_optimization_internal_fast_approx( const Config
                         forall_nodes_parallel(Q, coarse_node) {
                                 CoordType X_bar = 0;
                                 CoordType Y_bar = 0;
-                        
+
                                 for( int thread_num = 0; thread_num < omp_get_max_threads(); thread_num++) {
                                         for( unsigned int i = 0; i < cluster_to_nodes_local[thread_num][coarse_node].size(); i++) {
                                                 NodeID cur_node = cluster_to_nodes_local[thread_num][coarse_node][i];
@@ -368,7 +305,7 @@ void local_optimizer::run_maxent_optimization_internal_fast_approx( const Config
                                 G.setCoords(node, new_coord[node].x, new_coord[node].y);
                         } endfor
 
-                                                 
+
                         if(norm_diff/norm_coords < config.maxent_tol) {
                                 break;
                         }
@@ -381,117 +318,19 @@ void local_optimizer::run_maxent_optimization_internal_fast_approx( const Config
 }
 
 void local_optimizer::configure_distances( const Config & config, graph_access & G, std::vector< CoordType > & distances) {
-        if( config.use_two_hop ) {
-                forall_nodes_parallel(G, node) {
-                        forall_out_edges(G, e, node) {
-                                NodeID target = G.getEdgeTarget(e);
+        forall_nodes_parallel(G, node) {
+                forall_out_edges(G, e, node) {
+                        NodeID target = G.getEdgeTarget(e);
 
-                                CoordType factor =  config.intercluster_distance_factor;
-                                if( G.getPartitionIndex(node) == G.getPartitionIndex(target)) 
-                                        factor =  config.intracluster_distance_factor;
+                        CoordType factor =  config.intercluster_distance_factor;
+                        if( G.getPartitionIndex(node) == G.getPartitionIndex(target)) 
+                                factor =  config.intracluster_distance_factor;
 
-                                distances[e] = factor;
-                                distances[e] *= G.getEdgeWeight(e);
-                                distances[e] *= (sqrt(G.getNodeWeight(node))+sqrt(G.getNodeWeight(target)))/2.0;
-                                distances[e] /= config.general_distance_scaling_factor;
-                        } endfor
+                        distances[e]  = factor;
+                        distances[e] *= (sqrt(G.getNodeWeight(node))+sqrt(G.getNodeWeight(target)))/2.0;
+                        distances[e] /= config.general_distance_scaling_factor;
                 } endfor
-        } else {
-                forall_nodes_parallel(G, node) {
-                        forall_out_edges(G, e, node) {
-                                NodeID target = G.getEdgeTarget(e);
-
-                                CoordType factor =  config.intercluster_distance_factor;
-                                if( G.getPartitionIndex(node) == G.getPartitionIndex(target)) 
-                                        factor =  config.intracluster_distance_factor;
-
-                                distances[e]  = factor;
-                                distances[e] *= (sqrt(G.getNodeWeight(node))+sqrt(G.getNodeWeight(target)))/2.0;
-                                distances[e] /= config.general_distance_scaling_factor;
-                        } endfor
-                } endfor
-
-        }
-}
-
-void local_optimizer::scale_graph_coordinates( const Config & config, PartitionID block, graph_access & G, graph_access * Q ) {
-        if( G.number_of_edges() == 0) return;
-
-        CoordType scaling_factor = 0.25;
-        CoordType X = 0; CoordType Y = 0;
-        CoordType total_nodeweight = 0;
-        forall_nodes(G, node) {
-                X += G.getX(node);
-                Y += G.getY(node);
-                total_nodeweight += G.getNodeWeight(node);
-        } endfor
-
-        X /= G.number_of_nodes();
-        Y /= G.number_of_nodes();
-
-        CoordType max_dist = 0;
-        forall_nodes(G, node) {
-                CoordType diffX       = G.getX(node) - X;
-                CoordType diffY       = G.getY(node) - Y;
-                CoordType dist_square = diffX*diffX+diffY*diffY;
-                CoordType dist        = sqrt(dist_square);
-
-                if( dist > max_dist ) {
-                        max_dist = dist;
-                }
-        } endfor
-
-        CoordType target_max_dist =  sqrt(total_nodeweight)/scaling_factor;
-        CoordType internal_scaling_factor  = target_max_dist/max_dist;
-
-        forall_nodes(G, node) {
-                CoordType diffX       = G.getX(node) - X;
-                CoordType diffY       = G.getY(node) - Y;
-
-                CoordType newX = internal_scaling_factor*diffX + X;
-                CoordType newY = internal_scaling_factor*diffY + Y;
-
-                G.setCoords(node, newX, newY);
         } endfor
 }
 
-void local_optimizer::construct_two_hop(  graph_access & G, graph_access & Q ){
-        // approximate the number of edges needed
-        EdgeID num_edges = 0;
-        forall_nodes(G, node) {
-                num_edges += G.getNodeDegree(node);
-                forall_out_edges(G, e, node) {
-                        NodeID target = G.getEdgeTarget(e);
-                        num_edges += G.getNodeDegree(target);
-                } endfor
-        } endfor
 
-        Q.start_construction(G.number_of_nodes(), num_edges);
-
-        forall_nodes(G, node) {
-                Q.new_node();
-                Q.setNodeWeight(node, G.getNodeWeight(node));
-                Q.setCoords(node, G.getX(node), G.getY(node));
-                std::unordered_map< NodeID, bool > contains;
-                forall_out_edges(G, e, node) {
-                        NodeID target = G.getEdgeTarget(e);
-                        EdgeID e_bar = Q.new_edge(node, target);
-                        Q.setEdgeWeight(e_bar, 1);
-                        contains[target] = true;
-                } endfor
-
-                forall_out_edges(G, e, node) {
-                        NodeID target = G.getEdgeTarget(e);
-                        forall_out_edges(G, e_bar, target) {
-                                NodeID target_bar = G.getEdgeTarget(e_bar);
-                                if(target_bar != node && contains.find(target_bar) == contains.end()) {
-                                        EdgeID e_prime = Q.new_edge(node, target_bar);
-                                        Q.setEdgeWeight(e_prime, 2 );
-                                        contains[target_bar] = true;
-                                }
-                        } endfor
-                } endfor
-
-        } endfor
-        Q.finish_construction();
-}

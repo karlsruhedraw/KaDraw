@@ -34,10 +34,6 @@ struct Config
         //============================================================
         //=======================MATCHING=============================
         //============================================================
-        bool edge_rating_tiebreaking;
-
-        EdgeRating edge_rating;
-        
         PermutationQuality permutation_quality;
 
         MatchingType matching_type;
@@ -101,10 +97,6 @@ struct Config
         double maxent_tol;
 
         double size_base;
-
-        bool use_alg_distances;
-
-        bool use_two_hop;
 
         GraphicsFormatType export_grafic_type;
 

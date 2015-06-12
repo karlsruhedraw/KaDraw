@@ -49,8 +49,6 @@ class local_optimizer {
                 void configure_distances( const Config & config, graph_access & G, std::vector< CoordType > & distances  );
                 void run_maxent_optimization_internal( const Config & config, graph_access & G );
                 void run_maxent_optimization_internal_fast_approx( const Config & config, graph_access & G, graph_access & Q, CoarseMapping* coarse_mapping );
-                void scale_graph_coordinates( const Config & config, PartitionID block, graph_access & G, graph_access * Q ) ;
-                void construct_two_hop( graph_access & G, graph_access & Q );
 };
 
 

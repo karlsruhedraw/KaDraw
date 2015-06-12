@@ -72,19 +72,6 @@ class size_constraint_label_propagation : public matching {
                                 NodePermutationMap & permutation);
 
 
-                void ensemble_clusterings(const Config & config, 
-                                graph_access & G, 
-                                Matching & _matching, 
-                                CoarseMapping & coarse_mapping, 
-                                NodeID & no_of_coarse_vertices,
-                                NodePermutationMap & permutation);
-
-                void ensemble_two_clusterings( graph_access & G,
-                                std::vector<NodeID> & lhs, 
-                                std::vector<NodeID> & rhs, 
-                                std::vector< NodeID > & output,
-                                NodeID & no_of_coarse_vertices);
-
                 void match_internal(const Config & config, 
                                 graph_access & G, 
                                 Matching & _matching, 

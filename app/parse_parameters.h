@@ -51,8 +51,6 @@ int parse_parameters(int argn, char **argv,
         struct arg_dbl *lp_factor                            = arg_dbl0(NULL, "lp_factor", NULL, "Factor for label propagation.");
         struct arg_dbl *size_base                            = arg_dbl0(NULL, "size_base", NULL, "Size base for the cluster size constraint of label propagation.");
         struct arg_lit *draw_initial_clustering              = arg_lit0(NULL, "draw_initial_clustering","Draw initial clustering.");
-        struct arg_lit *use_alg_distances                    = arg_lit0(NULL, "use_alg_distances","Use algebraic distances.");
-        struct arg_lit *use_two_hop                          = arg_lit0(NULL, "use_two_hop","Use two hop neighborhood for MaxENT.");
         struct arg_lit *burn_image_to_disk                   = arg_lit0(NULL, "burn_image_to_disk","Save the image in a file.");
         struct arg_lit *burn_coordinates_to_disk             = arg_lit0(NULL, "burn_coordinates_to_disk","Save the coordinates in a file.");
         struct arg_lit *use_polar_coordinates                = arg_lit0(NULL, "use_polar_coordinates","Uses polar coordinates during projection of nodes.");
@@ -78,9 +76,6 @@ int parse_parameters(int argn, char **argv,
         struct arg_rex *export_type                          = arg_rex0(NULL, "export_type","^(pdf|png)$","TYPE", REG_EXTENDED, "Specify export type. [pdf|png]");
         struct arg_rex *preconfiguration                     = arg_rex0(NULL, "preconfiguration", "^(strong|eco|fast)$", "VARIANT", REG_EXTENDED, "Use a preconfiguration. (Default: eco) [strong|eco|fast]." );
 
-        struct arg_int *dyn_percent_edges                    = arg_int0(NULL, "dyn_percent_edges", NULL, "Number of that should be removed and added in one iteration.");
-        struct arg_int *dyn_bfs_deepth                       = arg_int0(NULL, "dyn_bfs_deepth", NULL, "Deepth for the BFS for candiated edges during insertion of edges in dynamic setting. ");
-        
 
         struct arg_end *end                                  = arg_end(100);
 
@@ -114,7 +109,6 @@ int parse_parameters(int argn, char **argv,
                 draw_cluster_first_disable_fine_tune,
                 light_intercluster_edges,
                 image_scale,
-                use_two_hop,
                 burn_image_to_disk,
                 burn_coordinates_to_disk,
                 use_polar_coordinates,
@@ -125,8 +119,6 @@ int parse_parameters(int argn, char **argv,
                 compute_MEnt,
                 coord_filename,
                 disable_scaling,
-                dyn_percent_edges,
-                dyn_bfs_deepth,
 #endif
 #endif
 #ifdef MODE_EVALUATOR
@@ -212,10 +204,6 @@ int parse_parameters(int argn, char **argv,
                 config.coord_filename = coord_filename->sval[0];
         } 
 
-        if(use_alg_distances->count > 0)  {
-                config.use_alg_distances = true;
-        }
-
         if(print_final_distances->count > 0)  {
                 config.print_final_distances = true;
         }
@@ -233,14 +221,6 @@ int parse_parameters(int argn, char **argv,
                 if(config.faster_drawing_num_levels == 0) {
                         config.faster_mapping = false;
                 }
-        }
-
-        if(dyn_bfs_deepth->count > 0)  {
-                config.dyn_bfs_deepth = dyn_bfs_deepth->ival[0];
-        }
-
-        if(dyn_percent_edges->count > 0)  {
-                config.dyn_percent_edges = dyn_percent_edges->ival[0];
         }
 
         if(compute_FSM->count > 0)  {
@@ -269,10 +249,6 @@ int parse_parameters(int argn, char **argv,
 
         if(use_polar_coordinates) {
                 config.use_polar_coordinates = true;
-        }
-
-        if(use_two_hop->count > 0)  {
-                config.use_two_hop = true;
         }
 
         if(draw_cluster_first->count > 0)  {

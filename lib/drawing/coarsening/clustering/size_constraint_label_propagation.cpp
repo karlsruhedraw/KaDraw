@@ -66,68 +66,6 @@ void size_constraint_label_propagation::match_internal(const Config & config,
         create_coarsemapping( config, G, cluster_id, coarse_mapping);
 }
 
-void size_constraint_label_propagation::ensemble_two_clusterings( graph_access & G, 
-                                                                  std::vector<NodeID> & lhs, 
-                                                                  std::vector<NodeID> & rhs, 
-                                                                  std::vector< NodeID > & output,
-                                                                  NodeID & no_of_coarse_vertices) {
-
-
-        hash_ensemble new_mapping; 
-        no_of_coarse_vertices = 0;
-        for( NodeID node = 0; node < lhs.size(); node++) {
-                ensemble_pair cur_pair;
-                cur_pair.lhs = lhs[node]; 
-                cur_pair.rhs = rhs[node]; 
-                cur_pair.n   = G.number_of_nodes(); 
-
-                if(new_mapping.find(cur_pair) == new_mapping.end() ) {
-                        new_mapping[cur_pair].mapping = no_of_coarse_vertices;
-                        no_of_coarse_vertices++;
-                }
-
-                output[node] = new_mapping[cur_pair].mapping;
-        }
-
-        no_of_coarse_vertices = new_mapping.size();
-}
-
-
-void size_constraint_label_propagation::ensemble_clusterings(const Config & config, 
-                                                             graph_access & G, 
-                                                             Matching & _matching, 
-                                                             CoarseMapping & coarse_mapping, 
-                                                             NodeID & no_of_coarse_vertices,
-                                                             NodePermutationMap & permutation) {
-        int runs = config.number_of_clusterings;
-        std::vector< NodeID >  cur_cluster(G.number_of_nodes(), 0);
-        std::vector< NodeID >  ensemble_cluster(G.number_of_nodes(),0);
-
-        int new_cf = config.cluster_coarsening_factor;
-        for( int i = 0; i < runs; i++) {
-                Config config = config;
-                config.cluster_coarsening_factor = new_cf;
-
-                NodeID cur_no_blocks = 0;
-                label_propagation(config, G, cur_cluster, cur_no_blocks); 
-
-                if( i != 0 ) {
-                        ensemble_two_clusterings(G, cur_cluster, ensemble_cluster, ensemble_cluster, no_of_coarse_vertices);
-                } else {
-                        forall_nodes(G, node) {
-                                ensemble_cluster[node] = cur_cluster[node];
-                        } endfor
-                        
-                        no_of_coarse_vertices = cur_no_blocks;
-                }
-                new_cf = random_functions::nextInt(10, 30);
-        }
-
-        create_coarsemapping( config, G, ensemble_cluster, coarse_mapping);
-
-
-}
-
 void size_constraint_label_propagation::label_propagation(const Config & config, 
                                                          graph_access & G, 
                                                          std::vector<NodeWeight> & cluster_id, 

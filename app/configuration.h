@@ -59,8 +59,6 @@ inline void configuration::standard( Config & config ) {
         config.maxent_tol                                  = 0.0001;
         config.size_base                                   = 2;
         config.draw_initial_clustering                     = false;
-        config.use_two_hop                                 = false;
-        config.use_alg_distances                           = false;
         config.linewidth                                   = 0.5;
         config.export_grafic_type                          = GRAPHICS_TYPE_PDF;
         config.intercluster_distance_factor                = 1;
