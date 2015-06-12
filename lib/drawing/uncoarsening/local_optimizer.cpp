@@ -41,17 +41,15 @@ void local_optimizer::run_maxent_optimization( const Config & config,
                 CoarseMapping* coarse_mapping ) {
         Config cfg = config;
 
-        if( !(config.draw_cluster_first_disable_fine_tune && config.last_level) ) {
-                if(config.faster_drawing) {
-                        // use version that approximates repulsive forces 
-                        if( coarser_graph == NULL) {
-                                run_maxent_optimization_internal( config, G);
-                        } else {
-                                run_maxent_optimization_internal_fast_approx( config, G, *coarser_graph, coarse_mapping);
-                        }
-                } else {
+        if(config.faster_drawing) {
+                // use version that approximates repulsive forces 
+                if( coarser_graph == NULL) {
                         run_maxent_optimization_internal( config, G);
+                } else {
+                        run_maxent_optimization_internal_fast_approx( config, G, *coarser_graph, coarse_mapping);
                 }
+        } else {
+                run_maxent_optimization_internal( config, G);
         }
 }
 

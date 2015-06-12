@@ -76,28 +76,27 @@ graph_access* graph_hierarchy::pop_finer_and_project() {
         //perform projection
         graph_access& fRef = *finer;
         graph_access& cRef = *m_current_coarser_graph;
-        if(!config.last_level_only) {
-                if(config.use_polar_coordinates) {
-                        forall_nodes(fRef, n) {
-                                NodeID coarser_node = (*coarse_mapping)[n];
-                                CoordType max_dist = config.intracluster_distance_factor;
-                                max_dist *= sqrt(cRef.getNodeWeight(coarser_node))/2.0;
-                                max_dist *= config.general_distance_scaling_factor;
 
-                                // project coordinates
-                                double angle = random_functions::nextDouble(0,2*3.1415);
-                                double distance = random_functions::nextDouble(0, max_dist);
-                                CoordType x = distance * cos( angle );
-                                CoordType y = distance * sin( angle );
-                                fRef.setCoords(n, cRef.getX(coarser_node) + x, cRef.getY(coarser_node) + y); 
-                        } endfor
-                } else {
-                        forall_nodes(fRef, n) {
-                                NodeID coarser_node = (*coarse_mapping)[n];
-                                // project coordinates
-                                fRef.setCoords(n, cRef.getX(coarser_node)+random_functions::nextDouble(0.01,0.05), cRef.getY(coarser_node) +random_functions::nextDouble(0.01,0.05)); 
-                        } endfor
-                }
+        if(config.use_polar_coordinates) {
+                forall_nodes(fRef, n) {
+                        NodeID coarser_node = (*coarse_mapping)[n];
+                        CoordType max_dist = config.intracluster_distance_factor;
+                        max_dist *= sqrt(cRef.getNodeWeight(coarser_node))/2.0;
+                        max_dist *= config.general_distance_scaling_factor;
+
+                        // project coordinates
+                        double angle = random_functions::nextDouble(0,2*3.1415);
+                        double distance = random_functions::nextDouble(0, max_dist);
+                        CoordType x = distance * cos( angle );
+                        CoordType y = distance * sin( angle );
+                        fRef.setCoords(n, cRef.getX(coarser_node) + x, cRef.getY(coarser_node) + y); 
+                } endfor
+        } else {
+                forall_nodes(fRef, n) {
+                        NodeID coarser_node = (*coarse_mapping)[n];
+                        // project coordinates
+                        fRef.setCoords(n, cRef.getX(coarser_node)+random_functions::nextDouble(0.01,0.05), cRef.getY(coarser_node) +random_functions::nextDouble(0.01,0.05)); 
+                } endfor
         }
 
         m_current_coarse_mapping = coarse_mapping;

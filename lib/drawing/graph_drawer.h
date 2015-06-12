@@ -51,21 +51,19 @@ public:
                 std::cout <<  "coarsening took " <<  t.elapsed() << std::endl;
 
                 graph_access& Q = *hierarchy.get_coarsest();
-                if(!config.last_level_only) {
-                        if(Q.number_of_nodes() > 2 || Q.number_of_nodes() < 2) {
-                                forall_nodes(Q, node) {
-                                        Q.setCoords(node, random_functions::nextDouble(0,1),random_functions::nextDouble(0,1));
-                                } endfor
-                        } else {
-                                //place them at perfect distance
-                                Q.setCoords(0, 0,0);
-                                double dist   = config.intercluster_distance_factor;
-                                dist *= (sqrt(Q.getNodeWeight(0))+sqrt(Q.getNodeWeight(1)))/2.0;
-                                dist /= config.general_distance_scaling_factor;
+                if(Q.number_of_nodes() > 2 || Q.number_of_nodes() < 2) {
+                        forall_nodes(Q, node) {
+                                Q.setCoords(node, random_functions::nextDouble(0,1),random_functions::nextDouble(0,1));
+                        } endfor
+                } else {
+                        //place them at perfect distance
+                        Q.setCoords(0, 0,0);
+                        double dist   = config.intercluster_distance_factor;
+                        dist *= (sqrt(Q.getNodeWeight(0))+sqrt(Q.getNodeWeight(1)))/2.0;
+                        dist /= config.general_distance_scaling_factor;
 
-                                Q.setCoords(1, 0, dist);
-                                std::cout <<  "current setting to distance " <<  dist  << std::endl;
-                        }
+                        Q.setCoords(1, 0, dist);
+                        std::cout <<  "current setting to distance " <<  dist  << std::endl;
                 }
                 
                 uncoarsen.perform_uncoarsening(config, hierarchy);

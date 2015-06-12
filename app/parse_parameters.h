@@ -117,7 +117,6 @@ int parse_parameters(int argn, char **argv,
                 print_final_distances,
                 compute_FSM,
                 compute_MEnt,
-                coord_filename,
                 disable_scaling,
 #endif
 #endif

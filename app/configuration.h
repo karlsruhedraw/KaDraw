@@ -67,7 +67,6 @@ inline void configuration::standard( Config & config ) {
         config.draw_cluster_first                          = false;
         config.draw_cluster_first_disable_fine_tune        = false;
         config.image_scale                                 = 10.0;
-        config.last_level                                  = false;
         config.compute_FSM                                 = false;
         config.compute_MEnt                                = false;
         config.light_intercluster_edges                    = false;
@@ -79,10 +78,7 @@ inline void configuration::standard( Config & config ) {
         config.faster_drawing                              = false;
         config.faster_mapping                              = true;
         config.faster_drawing_num_levels                   = 1;
-        config.last_level_only                             = false;
         config.disable_scaling                             = false;
-        config.dyn_bfs_deepth                              = 2;
-        config.dyn_percent_edges                           = 10;
 
         if(!config.output_filename.compare("")) {
                 config.output_filename = std::string("image.pdf");

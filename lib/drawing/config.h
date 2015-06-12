@@ -65,14 +65,13 @@ struct Config
         int num_vert_stop_factor;
 
         bool draw_initial_clustering;
+
         //=======================================
-        //===========SNW PARTITIONING============
+        //===========LABEL PROPAGATION===========
         //=======================================
         NodeOrderingType node_ordering;
 
         double cluster_coarsening_factor; 
-
-        bool ensemble_clusterings; 
 
         int label_iterations;
 
@@ -82,6 +81,7 @@ struct Config
 
         int repetitions;
 
+        NodeWeight cluster_upperbound;
         //=======================================
         //======== MAXENT LOCAL OPT =============
         //=======================================
@@ -90,6 +90,8 @@ struct Config
 
         double maxent_min_alpha;
 
+        double q;
+
         int maxent_inner_iterations;
 
         int maxent_outer_iterations;
@@ -97,8 +99,6 @@ struct Config
         double maxent_tol;
 
         double size_base;
-
-        GraphicsFormatType export_grafic_type;
 
         double intercluster_distance_factor;
 
@@ -140,25 +140,16 @@ struct Config
 
         bool faster_mapping;
 
-        bool last_level_only;
-
         bool disable_scaling;
-
-        int dyn_bfs_deepth;
-
-        int dyn_percent_edges;
-
-        //=======================================
-        //=========LABEL PROPAGATION=============
-        //=======================================
-        NodeWeight cluster_upperbound;
 
         //=======================================
         //============BURN DRAWING===============
         //=======================================
+        
+        GraphicsFormatType export_grafic_type;
+
         double linewidth;
 
-        double q;
 
         void LogDump(FILE *out) const {
         }

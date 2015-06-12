@@ -68,8 +68,6 @@ void coarsening::perform_coarsening(const Config & config, graph_access & G, gra
                 copy_of_config.upper_bound_partition = std::min(pow(config.size_base,level+1), ceil(config.upper_bound_partition/copy_of_config.cluster_coarsening_factor));
                 copy_of_config.upper_bound_partition = std::min(copy_of_config.upper_bound_partition, G.number_of_nodes()-1);
 
-                std::cout <<  "size constraint on cluster sizes " <<  copy_of_config.upper_bound_partition  << std::endl;
-
                 edge_matcher->match(copy_of_config, *finer, edge_matching, 
                                     *coarse_mapping, no_of_coarser_vertices, permutation);
 
@@ -86,7 +84,6 @@ void coarsening::perform_coarsening(const Config & config, graph_access & G, gra
 
                 hierarchy.push_back(finer, coarse_mapping);
                 contraction_stop = coarsening_stop_rule->stop(no_of_finer_vertices, no_of_coarser_vertices) && coarser->number_of_edges() != 0;
-                if( config.last_level_only && level >= (unsigned int)config.faster_drawing_num_levels-1) contraction_stop = false;
               
                 no_of_finer_vertices = no_of_coarser_vertices;
                 PRINT(std::cout <<  "no of coarser vertices " << no_of_coarser_vertices   
