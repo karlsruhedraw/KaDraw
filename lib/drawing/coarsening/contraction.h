@@ -25,7 +25,6 @@
 
 
 #include "data_structure/graph_access.h"
-#include "matching/matching.h"
 #include "config.h"
 
 typedef NodeID Regions;

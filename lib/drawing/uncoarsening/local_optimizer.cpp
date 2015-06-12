@@ -23,7 +23,6 @@
 #include <sstream>
 #include <omp.h>
 #include "local_optimizer.h"
-#include "drawing/coarsening/edge_rating/edge_ratings.h"
 #include "tools/graph_extractor.h"
 #include "tools/quality_metrics.h"
 #include "burn_drawing/burn_drawing.h"

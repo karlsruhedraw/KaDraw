@@ -28,10 +28,7 @@
 #include "contraction.h"
 #include "data_structure/graph_hierarchy.h"
 #include "definitions.h"
-#include "edge_rating/edge_ratings.h"
 #include "graph_io.h"
-#include "matching/gpa/gpa_matching.h"
-#include "matching/random_matching.h"
 #include "stop_rules/stop_rules.h"
 
 coarsening::coarsening() {
@@ -47,7 +44,6 @@ void coarsening::perform_coarsening(const Config & config, graph_access & G, gra
         NodeID no_of_coarser_vertices = G.number_of_nodes();
         NodeID no_of_finer_vertices   = G.number_of_nodes();
 
-        edge_ratings rating(config);
         CoarseMapping* coarse_mapping = NULL;
 
         graph_access* finer                      = &G;
@@ -68,7 +64,6 @@ void coarsening::perform_coarsening(const Config & config, graph_access & G, gra
                 NodePermutationMap permutation;
 
                 coarsening_config.configure_coarsening(copy_of_config, &edge_matcher, level);
-                rating.rate(*finer, level);
 
                 copy_of_config.upper_bound_partition = std::min(pow(config.size_base,level+1), ceil(config.upper_bound_partition/copy_of_config.cluster_coarsening_factor));
                 copy_of_config.upper_bound_partition = std::min(copy_of_config.upper_bound_partition, G.number_of_nodes()-1);

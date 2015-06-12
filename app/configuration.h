@@ -42,7 +42,6 @@ class configuration {
 
 inline void configuration::standard( Config & config ) {
         config.seed                                        = 0;
-        config.matching_type                               = MATCHING_RANDOM;
         config.permutation_quality                         = PERMUTATION_QUALITY_FAST;
 
         //  networking parameters

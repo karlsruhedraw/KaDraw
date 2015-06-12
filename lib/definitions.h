@@ -75,16 +75,6 @@ typedef std::vector<NodeID> CoarseMapping;
 typedef std::vector<NodeID> Matching;
 typedef std::vector<NodeID> NodePermutationMap;
 
-typedef double ImbalanceType;
-//Coarsening
-typedef enum {
-        EXPANSIONSTAR, 
-        EXPANSIONSTAR2, 
- 	WEIGHT, 
-	PSEUDOGEOM, 
-	EXPANSIONSTAR2ALGDIST, 
-} EdgeRating;
-
 typedef enum {
         PERMUTATION_QUALITY_NONE, 
 	PERMUTATION_QUALITY_FAST,  
@@ -92,9 +82,6 @@ typedef enum {
 } PermutationQuality;
 
 typedef enum {
-        MATCHING_RANDOM, 
-	MATCHING_GPA, 
-	MATCHING_RANDOM_GPA,
         CLUSTER_COARSENING
 } MatchingType;
 

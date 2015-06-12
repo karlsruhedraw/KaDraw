@@ -26,9 +26,6 @@
 #include "contraction.h"
 #include "data_structure/graph_hierarchy.h"
 #include "definitions.h"
-#include "edge_rating/edge_ratings.h"
-#include "matching/gpa/gpa_matching.h"
-#include "matching/random_matching.h"
 #include "clustering/size_constraint_label_propagation.h"
 #include "stop_rules/stop_rules.h"
 
@@ -47,18 +44,7 @@ inline void coarsening_configurator::configure_coarsening( const Config & config
                                                            unsigned level) {
 
         switch(config.matching_type) {
-                case MATCHING_RANDOM: 
-                        *edge_matcher = new random_matching();
-                        break; 
-                case MATCHING_GPA:
-                        *edge_matcher = new gpa_matching();
-                        PRINT(std::cout <<  "gpa matching"  << std::endl;)
-                        break;
-                case MATCHING_RANDOM_GPA:
-                        PRINT(std::cout <<  "random gpa matching"  << std::endl;)
-                        *edge_matcher = new gpa_matching();
-                        break;
-               case CLUSTER_COARSENING:
+                case CLUSTER_COARSENING:
                         PRINT(std::cout <<  "cluster_coarsening"  << std::endl;)
                         *edge_matcher = new size_constraint_label_propagation();
                         break;
