@@ -75,9 +75,9 @@ inline void configuration::standard( Config & config ) {
         config.burn_coordinates_to_disk                    = false;
         config.q                                           = 0;
         config.use_polar_coordinates                       = true;
-        config.faster_drawing                              = false;
+        config.faster_drawing                              = true;
         config.faster_mapping                              = true;
-        config.faster_drawing_num_levels                   = 1;
+        config.faster_drawing_num_levels                   = 5;
         config.disable_scaling                             = false;
 
         if(!config.output_filename.compare("")) {

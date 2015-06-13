@@ -57,14 +57,12 @@ int uncoarsening::perform_uncoarsening(const Config & config, graph_hierarchy & 
                         if( config.faster_drawing && config.faster_drawing_num_levels > 1 ) {
                                 CoarseMapping* direct_coarse_mapping = NULL;
                                 if(config.faster_mapping) {
-                                        std::cout <<  "faster mapping computation"  << std::endl;
                                         direct_coarse_mapping = hierarchy.get_mapping_plus_x_faster(config.faster_drawing_num_levels);
                                 } else {
                                         direct_coarse_mapping = hierarchy.get_mapping_plus_x(config.faster_drawing_num_levels);
                                 }
 
                                 graph_access*  direct_coarser = hierarchy.get_coarser_plus_x(config.faster_drawing_num_levels);
-                                std::cout <<  "mapping size " <<  direct_coarser->number_of_nodes()  << std::endl;
                                 lopt.run_maxent_optimization(cfg, *G, direct_coarser, direct_coarse_mapping);
                                 delete direct_coarse_mapping;
                         } else {

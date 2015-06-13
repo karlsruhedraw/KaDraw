@@ -45,7 +45,6 @@ inline void coarsening_configurator::configure_coarsening( const Config & config
 
         switch(config.matching_type) {
                 case CLUSTER_COARSENING:
-                        PRINT(std::cout <<  "cluster_coarsening"  << std::endl;)
                         *edge_matcher = new size_constraint_label_propagation();
                         break;
 

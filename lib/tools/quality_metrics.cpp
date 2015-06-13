@@ -206,6 +206,45 @@ double quality_metrics::compute_fsm_scaling_factor_unit_weight( graph_access & G
         return top_fraction/bottom_fraction;
 }
 
+double quality_metrics::compute_sparse_scaling_factor_unit_weight( graph_access & G ) {
+        double top_fraction    = 0;
+        double bottom_fraction = 0;
+        forall_nodes_parallel_reduce(G, source,+,top_fraction) {
+
+                forall_out_edges(G, e, source) {
+                        NodeID target = G.getEdgeTarget(e);
+                        double diffX       = G.getX(source) - G.getX(target);
+                        double diffY       = G.getY(source) - G.getY(target);
+                        double dist_square = diffX*diffX+diffY*diffY;
+                        double dist        = sqrt(dist_square);
+
+                        int best_distance = 1;
+                        if( best_distance == 0 ) continue;
+                        top_fraction += (dist / best_distance);
+
+                } endfor
+        } endfor
+
+        forall_nodes_parallel_reduce(G, source,+,bottom_fraction) {
+
+                forall_out_edges(G, e, source) {
+                        NodeID target = G.getEdgeTarget(e);
+                        double diffX       = G.getX(source) - G.getX(target);
+                        double diffY       = G.getY(source) - G.getY(target);
+                        double dist_square = diffX*diffX+diffY*diffY;
+                        double dist        = sqrt(dist_square);
+
+                        int best_distance = 1;
+                        if( best_distance == 0 ) continue;
+                        bottom_fraction += (dist*dist) / (best_distance*best_distance);
+
+                } endfor
+        } endfor
+
+
+        return top_fraction/bottom_fraction;
+}
+
 
 double quality_metrics::avg_infeasibility_per_edge( graph_access & G) {
         double total_infisibility = 0;

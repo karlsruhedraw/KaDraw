@@ -19,6 +19,7 @@ public:
         double maxent_unitweight( graph_access & G, double q, double alpha );
         double avg_infeasibility_per_edge( graph_access & G );
         double compute_fsm_scaling_factor_unit_weight( graph_access & G ); 
+        double compute_sparse_scaling_factor_unit_weight( graph_access & G ); 
 };
 
 
