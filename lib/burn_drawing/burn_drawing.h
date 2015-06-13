@@ -1,9 +1,9 @@
 /******************************************************************************
- * burn_drawing.cpp
+ * burn_drawing.h 
  *
- * Source of the DrawIt Program 
+ * Source of KaDraw -- Karlsruhe Graph Drawing 
  ******************************************************************************
- * Copyright (C) 2014 Christian Schulz <christian.schulz@kit.edu>
+ * Copyright (C) 2015 Christian Schulz <christian.schulz@kit.edu>
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free

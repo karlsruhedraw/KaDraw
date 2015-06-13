@@ -1,10 +1,9 @@
 /******************************************************************************
  * mpi_tools.h 
  *
- * Source of DrawIT 
- *
+ * Source of KaDraw -- Karlsruhe Graph Drawing 
  ******************************************************************************
- * Copyright (C) 2014 Christian Schulz <christian.schulz@kit.edu>
+ * Copyright (C) 2015 Christian Schulz <christian.schulz@kit.edu>
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -23,7 +22,6 @@
 #ifndef MPI_TOOLS_HMESDXF2
 #define MPI_TOOLS_HMESDXF2
 
-
 class mpi_tools {
 public:
         mpi_tools();
@@ -31,6 +29,5 @@ public:
 
         static void non_active_wait_for_root();
 };
-
 
 #endif /* end of include guard: MPI_TOOLS_HMESDXF2 */

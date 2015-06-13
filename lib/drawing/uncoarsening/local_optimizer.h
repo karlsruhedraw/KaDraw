@@ -1,9 +1,9 @@
 /******************************************************************************
  * local_optimizer.h 
  *
- * Source of the DrawIt Program 
+ * Source of KaDraw -- Karlsruhe Graph Drawing 
  ******************************************************************************
- * Copyright (C) 2014 Christian Schulz <christian.schulz@kit.edu>
+ * Copyright (C) 2015 Christian Schulz <christian.schulz@kit.edu>
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -18,6 +18,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *****************************************************************************/
+
 
 #ifndef LOCAL_OPTIMIZER_1NLF0Q4Y
 #define LOCAL_OPTIMIZER_1NLF0Q4Y

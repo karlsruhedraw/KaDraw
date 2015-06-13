@@ -1,9 +1,9 @@
 /******************************************************************************
- * burn_drawing.cpp
+ * burn_drawing.cpp 
  *
- * Source of the DrawIt Program 
+ * Source of KaDraw -- Karlsruhe Graph Drawing 
  ******************************************************************************
- * Copyright (C) 2014 Christian Schulz <christian.schulz@kit.edu>
+ * Copyright (C) 2015 Christian Schulz <christian.schulz@kit.edu>
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -18,7 +18,6 @@
  * You should have received a copy of the GNU General Public License along with
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  *****************************************************************************/
-
 
 // Draw the graph using the Cairo Library
 
@@ -182,9 +181,9 @@ void burn_drawing::draw_graph( Config & config, graph_access & G) {
                                 distance          = sqrt(distance);
 
                                 if(distance < 0.5*median) {
-                                        HsvToRgb(hues[0], 0.8, 1.0, &r, &g, &b);
+                                        HsvToRgb(hues[1], 0.8, 1.0, &r, &g, &b);
                                 } else if (distance > 1.5*median) {
-                                        HsvToRgb(hues[2], 0.8, 1.0, &r, &g, &b);
+                                        HsvToRgb(hues[1], 0.8, .75, &r, &g, &b);
                                 } else {
                                         //interpolate
                                         double final_hue = 0;
@@ -196,7 +195,7 @@ void burn_drawing::draw_graph( Config & config, graph_access & G) {
                                                 alpha = (distance-0.5*median)/median;
                                                 final_hue = alpha*hues[0] + (1-alpha)*hues[1];
                                         }
-                                        HsvToRgb(final_hue, 0.8, 1.0, &r, &g, &b);
+                                        HsvToRgb(hues[2], 0.9, .5, &r, &g, &b);
                                 }
                                 cairo_set_source_rgb(cr, r, g, b);
 
