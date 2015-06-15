@@ -107,6 +107,7 @@ int main(int argn, char **argv) {
         graph_access Q;
         graph_extractor E;
         E.extract_largest_component(G, Q);
+
         // **************************** compute coordinates *****************************************       
         graph_drawer gd;
         std::cout <<  "performing drawing!"  << std::endl;
@@ -117,24 +118,11 @@ int main(int argn, char **argv) {
         ofs.close();
         std::cout.rdbuf(backup);
         std::cout <<  "time spent " << t.elapsed()  << std::endl;
+
+        
         quality_metrics qm;
-        if(!config.disable_scaling) {
-                std::cout <<  "now computing scaling factor and scaling"  << std::endl;
-                double scaling_factor = qm.compute_fsm_scaling_factor_unit_weight(Q);
-                std::cout <<  "scaling factor is " <<  scaling_factor << std::endl;
-
-                //scale coordinates
-                forall_nodes(Q, node) {
-                        Q.setCoords(node, Q.getX(node)*scaling_factor, Q.getY(node)*scaling_factor);
-                } endfor
-        }
-
         if(config.burn_image_to_disk) {
-                std::cout <<  "now burning image to disk" << std::endl;
-                t.restart();
-
-                burn_drawing bd;
-
+                std::cout <<  "now performing sparse scaling " <<  std::endl;
                 double scaling_factor = qm.compute_sparse_scaling_factor_unit_weight(Q);
                 std::cout <<  "sparse scaling factor is " <<  scaling_factor << std::endl;
 
@@ -143,13 +131,24 @@ int main(int argn, char **argv) {
                         Q.setCoords(node, Q.getX(node)*scaling_factor, Q.getY(node)*scaling_factor);
                 } endfor
 
+                std::cout <<  "now burning image to disk" << std::endl;
+                t.restart();
+
+                burn_drawing bd;
                 bd.draw_graph(config, Q);
 
                 std::cout <<  "took " << t.elapsed()  << std::endl;
         }
 
-        if(config.print_final_distances) {
-                qm.print_distances(Q);
+        if(config.compute_FSM || config.compute_MEnt || config.burn_coordinates_to_disk) {
+                std::cout <<  "now strong computing scaling factor and scaling"  << std::endl;
+                double scaling_factor = qm.compute_fsm_scaling_factor_unit_weight(Q);
+                std::cout <<  "scaling factor is " <<  scaling_factor << std::endl;
+
+                //scale coordinates
+                forall_nodes(Q, node) {
+                        Q.setCoords(node, Q.getX(node)*scaling_factor, Q.getY(node)*scaling_factor);
+                } endfor
         }
 
         if(config.compute_FSM) {

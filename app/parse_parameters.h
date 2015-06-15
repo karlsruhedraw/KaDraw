@@ -73,7 +73,7 @@ int parse_parameters(int argn, char **argv,
         struct arg_dbl *q                                    = arg_dbl0(NULL, "q", NULL, "Parameter q in the MaxEnt formular.");
         struct arg_int *label_propagation_iterations         = arg_int0(NULL, "label_propagation_iterations", NULL, "Number of LP iterations.");
         struct arg_rex *export_type                          = arg_rex0(NULL, "export_type","^(pdf|png)$","TYPE", REG_EXTENDED, "Specify export type. [pdf|png]");
-        struct arg_rex *preconfiguration                     = arg_rex0(NULL, "preconfiguration", "^(strong|eco|fast)$", "VARIANT", REG_EXTENDED, "Use a preconfiguration. (Default: eco) [strong|eco|fast]." );
+        struct arg_rex *preconfiguration                     = arg_rex0(NULL, "preconfiguration", "^(strong|eco|fast)$", "VARIANT", REG_EXTENDED, "Use a preconfiguration. (Default: fast) [strong|eco|fast]." );
 
 
         struct arg_end *end                                  = arg_end(100);
@@ -169,6 +169,7 @@ int parse_parameters(int argn, char **argv,
         cfg.fast(config);
 
         if(preconfiguration->count > 0) {
+
                 if (strcmp("fast", preconfiguration->sval[0]) == 0) {
                         cfg.fast(config);
                 } else if (strcmp("eco", preconfiguration->sval[0]) == 0) {
