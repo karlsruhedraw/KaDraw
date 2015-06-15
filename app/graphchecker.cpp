@@ -51,7 +51,7 @@ int main(int argn, char **argv)
         }
 
         std::cout <<  "*******************************************************************************"  << std::endl;
-        std::cout <<  "KaHIP -- graph format checker."  << std::endl;
+        std::cout <<  "KaDraw -- graph format checker."  << std::endl;
         std::cout <<  "Output will be given using the IDs from file, i.e. the IDs are starting from 1."  << std::endl;
         std::cout <<  "*******************************************************************************"  << std::endl;
 

@@ -1,7 +1,7 @@
 #/******************************************************************************
 # * SConscript
 # *
-# * Source of KaHIP -- Karlsruhe High Quality Partitioning.
+# * Source of KaDraw -- Karlsruhe Graph Drawing.
 # *
 # ******************************************************************************
 # * Copyright (C) 2013 Christian Schulz <christian.schulz@kit.edu>

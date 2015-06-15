@@ -38,7 +38,7 @@ int parse_parameters(int argn, char **argv,
         // Setup argtable parameters.
         struct arg_lit *help                                 = arg_lit0(NULL, "help","Print help.");
         struct arg_str *filename                             = arg_strn(NULL, NULL, "FILE", 1, 1, "Path to graph file to draw.");
-        struct arg_str *output_filename                      = arg_str0(NULL, "output_filename", NULL, "Output filename of the png file.");
+        struct arg_str *output_filename                      = arg_str0(NULL, "output_filename", NULL, "Output filename of the png/pdf file.");
         struct arg_str *output_coord_filename                = arg_str0(NULL, "output_coord_filename", NULL, "Output filename of the coordinates.");
         struct arg_str *coord_filename                       = arg_str0(NULL, "coordfilename", NULL, "Filename of input coordinates to evaluate.");
         struct arg_int *user_seed                            = arg_int0(NULL, "seed", NULL, "Seed to use for the PRNG.");
@@ -85,7 +85,6 @@ int parse_parameters(int argn, char **argv,
                 user_seed,
 #ifndef MODE_EVALUATOR 
 #ifndef MODE_DRAWFROMCOORDS                
-                output_filename, 
                 preconfiguration, 
                 //label_propagation_iterations,
                 //maxent_inner_iter,
@@ -106,6 +105,7 @@ int parse_parameters(int argn, char **argv,
                 burn_coordinates_to_disk,
                 //use_polar_coordinates,
                 burn_image_to_disk,
+                output_filename, 
                 image_scale,
                 num_threads,
                 export_type,

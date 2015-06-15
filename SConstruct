@@ -4,7 +4,7 @@
 # * Source of KaDraw -- Karlsruhe Graph Drawing.
 # *
 # ******************************************************************************
-# * Copyright (C) 2013 Christian Schulz <christian.schulz@kit.edu>
+# * Copyright (C) 2015 Christian Schulz <christian.schulz@kit.edu>
 # *
 # * This program is free software: you can redistribute it and/or modify it
 # * under the terms of the GNU General Public License as published by the Free
