@@ -74,6 +74,33 @@ int main(int argn, char **argv) {
         graph_io::readGraphWeighted(G, graph_filename);
         std::cout << "io time: " << t.elapsed()  << std::endl;
        
+
+        if( G.number_of_nodes() < 100) {
+                config.faster_drawing_num_levels = 3;
+        } else if ( G.number_of_nodes() < 1000) {
+                config.faster_drawing_num_levels = 5;
+        } else if ( G.number_of_nodes() < 10000) {
+                config.faster_drawing_num_levels = 6;
+        } else if ( G.number_of_nodes() < 100000) {
+                config.faster_drawing_num_levels = 7;
+        } else if ( G.number_of_nodes() < 300000) {
+                config.faster_drawing_num_levels = 8;
+        } else if ( G.number_of_nodes() < 600000) {
+                config.faster_drawing_num_levels = 9;
+        } else if ( G.number_of_nodes() < 2000000) {
+                config.faster_drawing_num_levels = 10;
+        } else if ( G.number_of_nodes() < 4000000) {
+                config.faster_drawing_num_levels = 11;
+        } else if ( G.number_of_nodes() < 10000000) {
+                config.faster_drawing_num_levels = 12;
+        } else if ( G.number_of_nodes() < 20000000) {
+                config.faster_drawing_num_levels = 15;
+        } else if ( G.number_of_nodes() < 40000000) {
+                config.faster_drawing_num_levels = 17;
+        } else {
+                config.faster_drawing_num_levels = 20;
+        }
+
         srand(config.seed);
         random_functions::setSeed(config.seed);
 
