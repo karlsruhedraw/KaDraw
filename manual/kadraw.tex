@@ -145,7 +145,7 @@ The output format of coordinates is basically a text file.
 This file contains $n$ lines. 
 In each line the 2D-coordinate of the corresponding vertex is given, \ie line $i$ contains the coordinate of vertex $i$.
 \subsubsection{PDF/PNG files}
-If the output is a node separator then the same format as used for a partition is used. However, in this case the nodes of the separator get the block ID $k$ where as the other nodes maintain their original block id. 
+Our program is able to output a PDF/PNG file directly. You can specify the export type in the programs and view the graph with a tool of your choice afterwards.
 \subsection{Troubleshooting}
 KaDraw should not crash! If KaDraw crashes it is mostly due to the following reasons: the provided graph contains self-loops or parallel edges, there exists a forward edge but the backward edge is missing or the forward and backward edges have different weights, or the number of vertices or edges specified does not match the number of vertices or edges provided in the file.
 Please use the \emph{graphcheck} tool provided in our graph partitioning package to verify whether your graph has the right input format. If our graphcheck tool tells you that the graph that you provided has the correct format and KaDraw crashes anyway, please write us an email.
@@ -183,6 +183,17 @@ kadraw &   [-{}-help] FILE [-{}-seed=<int>] [-{}-preconfiguration=VARIANT]  \\
   --compute\_FSM                & Enable computation of Full Stress Measure.\\
   --compute\_MEnt               & Enable computation of MaxEnt-stress at a penalty level of 0.008.\\
 \end{tabularx}
+\subsection{Graph Format Checker}
+\paragraph*{Description:} This program checks if the graph specified in a given file is valid. 
+\paragraph*{Usage:\\} 
+\begin{tabular}{ll}
+graphchecker & file
+\end{tabular}
+\subsection*{Options:\\} 
+\begin{tabularx}{\textwidth}{lX}
+  file                       & Path to the graph file. \\
+\end{tabularx}
+
 \vfill
 \pagebreak
 \subsection{Evaluator}
@@ -227,20 +238,10 @@ evaluator &   [-{}-help] FILE [-{}-seed=<int>] [-{}-print\_final\_distances]  \\
   --coordfilename=<string>      & Filename of input coordinates to evaluate. \\
 \end{tabularx}
 
-\vfill
-\pagebreak
-\vfill
-\pagebreak
-\subsection{Graph Format Checker}
-\paragraph*{Description:} This program checks if the graph specified in a given file is valid. 
-\paragraph*{Usage:\\} 
-\begin{tabular}{ll}
-graphchecker & file
-\end{tabular}
-\subsection*{Options:\\} 
-\begin{tabularx}{\textwidth}{lX}
-  file                       & Path to the graph file. \\
-\end{tabularx}
+%\vfill
+%\pagebreak
+%\vfill
+%\pagebreak
 
 \vfill
 \pagebreak
