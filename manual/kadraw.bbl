@@ -1,16 +1,10 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{1}
 
 \bibitem{abello-ask-06}
 J.~Abello, F.~van Ham, and Neeraj K.
 \newblock Ask-graphview: A large scale graph visualization system.
 \newblock {\em {IEEE} Trans. Visualization and Computer Graphics},
   12(5):669--676, 2006.
-
-\bibitem{fiduccia1982lth}
-C.~M. Fiduccia and R.~M. Mattheyses.
-\newblock {A Linear-Time Heuristic for Improving Network Partitions}.
-\newblock In {\em Proceedings of the 19th Conference on Design Automation},
-  pages 175--181, 1982.
 
 \bibitem{ghn-mmgl-13}
 E.~R. Gansner, Y.~Hu, and S.~C. North.
@@ -42,38 +36,14 @@ S.~Kirmani and P.~Raghavan.
   Performance Computing, Networking, Storage and Analysis}, SC '13, pages
   51:1--51:10, New York, NY, USA, 2013. ACM.
 
-\bibitem{Scotch}
-F.~Pellegrini.
-\newblock {Scotch Home Page}.
-\newblock {\url{http://www. labri.fr/pelegrin/scotch}}.
+\bibitem{pcomplexnetworksviacluster}
+H.~Meyerhenke, P.~Sanders, and C.~Schulz.
+\newblock {Partitioning Complex Networks via Size-constrained Clustering}.
+\newblock In {\em 13th Int. Symp. on Exp. Algorithms}, LNCS. Springer, 2014.
 
-\bibitem{pothen1990partitioning}
-A.~Pothen, H.~D. Simon, and K.~P. Liou.
-\newblock {Partitioning Sparse Matrices with Eigenvectors of Graphs}.
-\newblock {\em SIAM Journal on Matrix Analysis and Applications},
-  11(3):430--452, 1990.
-
-\bibitem{kaffpa}
-P.~Sanders and C.~Schulz.
-\newblock {Engineering Multilevel Graph Partitioning Algorithms}.
-\newblock In {\em Proc. of the 19th European Symp. on Algorithms}, volume 6942
-  of {\em LNCS}, pages 469--480. Springer, 2011.
-
-\bibitem{dissSchulz}
-Christian Schulz.
-\newblock {\em {High Quality Graph Partititioning}}.
-\newblock PhD thesis, Karlsruhe Institute of Technology, 2013.
-
-\bibitem{walshaw2004multilevel}
-C.~Walshaw.
-\newblock {Multilevel Refinement for Combinatorial Optimisation Problems}.
-\newblock {\em Annals of OR}, 131(1):325--372, 2004.
-
-\bibitem{Walshaw07}
-C.~Walshaw and M.~Cross.
-\newblock {JOSTLE: Parallel Multilevel Graph-Partitioning Software -- An
-  Overview}.
-\newblock In {\em {Mesh Partitioning Techniques and Domain Decomposition
-  Techniques}}, pages 27--58. 2007.
+\bibitem{mulment}
+Henning Meyerhenke, Martin Nöllenburg, and Christian Schulz.
+\newblock Drawing large graphs by multilevel maxent-stress optimization.
+\newblock Technical report.
 
 \end{thebibliography}

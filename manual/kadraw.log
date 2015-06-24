@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.11.27)  24 JUN 2015 15:44
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.11.27)  24 JUN 2015 17:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**kadraw.tex
+**kadraw
 (./kadraw.tex
 LaTeX2e <2011/06/27>
 Babel <3.9h> and hyphenation patterns for 78 languages loaded.
@@ -303,9 +303,19 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@every@algorithm=\toks22
 \c@algorithm=\count94
 )
+(/usr/share/texlive/texmf-dist/tex/latex/tools/theorem.sty
+Package: theorem 1995/11/23 v2.2c Theorem extension package (FMi)
+\theorem@style=\toks23
+\theorem@bodyfont=\toks24
+\theorempreskipamount=\skip47
+\theorempostskipamount=\skip48
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/thp.sty
+File: thp.sty 1995/11/23 v2.2c Theorem extension package (FMi)
+))
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2013/01/14 v2.14 AMS math features
-\@mathmargin=\skip47
+\@mathmargin=\skip49
 
 For additional information on amsmath, use the `?' option.
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
@@ -313,7 +323,7 @@ Package: amstext 2000/06/29 v2.01
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
-\@emptytoks=\toks23
+\@emptytoks=\toks25
 \ex@=\dimen111
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
@@ -343,21 +353,21 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 \dotsspace@=\muskip10
 \c@parentequation=\count102
 \dspbrk@lvl=\count103
-\tag@help=\toks24
+\tag@help=\toks26
 \row@=\count104
 \column@=\count105
 \maxfields@=\count106
-\andhelp@=\toks25
+\andhelp@=\toks27
 \eqnshift@=\dimen114
 \alignsep@=\dimen115
 \tagshift@=\dimen116
 \tagwidth@=\dimen117
 \totwidth@=\dimen118
 \lineht@=\dimen119
-\@envbody=\toks26
-\multlinegap=\skip48
-\multlinetaggap=\skip49
-\mathdisplay@stack=\toks27
+\@envbody=\toks28
+\multlinegap=\skip50
+\multlinetaggap=\skip51
+\mathdisplay@stack=\toks29
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
 )
@@ -385,7 +395,7 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/preprint/fullpage.sty
 Package: fullpage 1999/02/23 1.1 (PWD)
-\FP@margin=\skip50
+\FP@margin=\skip52
 )
 (/usr/share/texlive/texmf-dist/tex/latex/base/latexsym.sty
 Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
@@ -410,8 +420,8 @@ Package: multicol 2011/06/27 v1.7a multicolumn formatting (FMi)
 \page@free=\dimen122
 \premulticols=\dimen123
 \postmulticols=\dimen124
-\multicolsep=\skip51
-\multicolbaselineskip=\skip52
+\multicolsep=\skip53
+\multicolbaselineskip=\skip54
 \partial@page=\box32
 \last@line=\box33
 \mult@rightbox=\box34
@@ -450,13 +460,13 @@ Package: numprint 2012/08/20 v1.39 Print numbers (HH)
 \c@nprt@mantissa@digitsafter=\count118
 \c@nprt@exponent@digitsbefore=\count119
 \c@nprt@exponent@digitsafter=\count120
-\nprt@digitwidth=\skip53
-\nprt@sepwidth=\skip54
-\nprt@decimalwidth=\skip55
-\nprt@blockwidth=\skip56
-\nprt@digittoks=\toks28
-\nprt@pretoks=\toks29
-\nprt@posttoks=\toks30
+\nprt@digitwidth=\skip55
+\nprt@sepwidth=\skip56
+\nprt@decimalwidth=\skip57
+\nprt@blockwidth=\skip58
+\nprt@digittoks=\toks30
+\nprt@pretoks=\toks31
+\nprt@posttoks=\toks32
 \nprt@thisdigit=\count121
 \nprt@curpos=\count122
 \nprt@rndpos=\count123
@@ -517,23 +527,23 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layoutheight=\dimen135
 \Gm@layouthoffset=\dimen136
 \Gm@layoutvoffset=\dimen137
-\Gm@dimlist=\toks31
+\Gm@dimlist=\toks33
 ) (./kadraw.aux)
 \openout1 = `kadraw.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Try loading font information for T1+ptm on input line 35.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 36.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
@@ -544,12 +554,12 @@ File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 \scratchbox=\box57
 \nofMPsegments=\count131
 \nofMParguments=\count132
-\everyMPshowfont=\toks32
+\everyMPshowfont=\toks34
 \MPscratchCnt=\count133
 \MPscratchDim=\dimen139
 \MPnumerator=\count134
 \makeMPintoPDFobject=\count135
-\everyMPtoPDFconversion=\toks33
+\everyMPtoPDFconversion=\toks35
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -628,31 +638,31 @@ e
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 43.
+LaTeX Font Info:    Try loading font information for U+msa on input line 44.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 43.
+LaTeX Font Info:    Try loading font information for U+msb on input line 44.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 43.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 44.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 43.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 44.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
 LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <12> not available
-(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 43.
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 44.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 44.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 45.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 48.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 49.
  (./kadraw.toc
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 1.
@@ -663,80 +673,82 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10.95> not available
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (14.25851pt too wide) in paragraph at lines 107--111
+ \T1/ptm/b/n/10.95 Shared-memory Par-al-leliza-tion.[] \T1/ptm/m/n/10.95 Our lo
+-cal op-ti-miza-tion al-go-rithms are shared-memory par-al-lelized us-ing OpenM
+P.
+ []
+
+[2]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 83.
- [3]
-<example_graph.pdf, id=16, 590.205pt x 309.155pt>
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 120.
+ <example_graph.pdf, id=20, 590.205pt x 309.155pt>
 File: example_graph.pdf Graphic file (type pdf)
  <use example_graph.pdf>
-Package pdftex.def Info: example_graph.pdf used on input line 106.
+Package pdftex.def Info: example_graph.pdf used on input line 136.
 (pdftex.def)             Requested size: 400.38872pt x 209.73201pt.
 
-[4 <./example_graph.pdf>] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 138--138
+[3 <./example_graph.pdf>] [4]
+Underfull \hbox (badness 10000) in paragraph at lines 168--168
+
+ []
+
+[5]
+Overfull \hbox (22.37013pt too wide) in paragraph at lines 188--194
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--196
 
  []
 
 [6]
-Overfull \hbox (22.37013pt too wide) in paragraph at lines 158--164
+Overfull \hbox (22.46802pt too wide) in paragraph at lines 220--223
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 166--166
-
- []
-
-[7]
-Overfull \hbox (22.46802pt too wide) in paragraph at lines 190--193
-[] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 193--193
+Underfull \hbox (badness 10000) in paragraph at lines 223--223
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 209--209
+Underfull \hbox (badness 10000) in paragraph at lines 239--239
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 226--226
+Underfull \hbox (badness 10000) in paragraph at lines 256--256
 
  []
 
-[8] (./kadraw.bbl
-Underfull \hbox (badness 1701) in paragraph at lines 28--31
-[]\T1/ptm/m/n/10.95 B. Hen-drick-son.  Chaco: Soft-ware for Par-ti-tion-ing Gra
-phs.  $\T1/pcr/m/n/10.95 http : / / www . cs . sandia . gov /
- []
-
-) [9] (./kadraw.aux) ) 
+[7] (./kadraw.bbl) [8] (./kadraw.aux) ) 
 Here is how much of TeX's memory you used:
- 4266 strings out of 493304
- 56053 string characters out of 6139870
- 140175 words of memory out of 5000000
- 7588 multiletter control sequences out of 15000+600000
+ 4287 strings out of 493304
+ 56502 string characters out of 6139870
+ 140615 words of memory out of 5000000
+ 7603 multiletter control sequences out of 15000+600000
  45112 words of font info for 70 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,12n,24p,774b,351s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.en
-c}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
-w/courier/ucrro8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb
-8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on kadraw.pdf (9 pages, 129732 bytes).
+ 38i,12n,24p,770b,351s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc
+/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
+10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/urw/courier/ucrro8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
+utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on kadraw.pdf (8 pages, 148018 bytes).
 PDF statistics:
- 84 PDF objects out of 1000 (max. 8388607)
- 59 compressed objects within 1 object stream
+ 89 PDF objects out of 1000 (max. 8388607)
+ 63 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

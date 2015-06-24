@@ -1,15 +1,15 @@
 \contentsline {section}{\numberline {1}Introduction}{2}
-\contentsline {section}{\numberline {2}Graph Drawing Algorithms within KaDraw}{3}
-\contentsline {subsection}{\numberline {2.1}MulMent}{3}
-\contentsline {section}{\numberline {3}Graph Format}{4}
-\contentsline {subsection}{\numberline {3.1}Input File Format}{4}
-\contentsline {subsection}{\numberline {3.2}Output File Formats}{5}
-\contentsline {subsubsection}{\numberline {3.2.1}Coordinate File}{5}
-\contentsline {subsubsection}{\numberline {3.2.2}PDF/PNG files}{5}
-\contentsline {subsection}{\numberline {3.3}Troubleshooting}{5}
-\contentsline {section}{\numberline {4}User Interface}{6}
-\contentsline {subsection}{\numberline {4.1}KaFFPa}{6}
-\contentsline {subsection}{\numberline {4.2}KaFFPaE / KaBaPE}{7}
-\contentsline {subsection}{\numberline {4.3}Node Separators}{8}
-\contentsline {subsection}{\numberline {4.4}Label Propagation}{8}
-\contentsline {subsection}{\numberline {4.5}Graph Format Checker}{8}
+\contentsline {section}{\numberline {2}Graph Drawing Algorithms within KaDraw}{2}
+\contentsline {paragraph}{Shared-memory Parallelization.}{2}
+\contentsline {section}{\numberline {3}Graph Format}{3}
+\contentsline {subsection}{\numberline {3.1}Input File Format}{3}
+\contentsline {subsection}{\numberline {3.2}Output File Formats}{4}
+\contentsline {subsubsection}{\numberline {3.2.1}Coordinate File}{4}
+\contentsline {subsubsection}{\numberline {3.2.2}PDF/PNG files}{4}
+\contentsline {subsection}{\numberline {3.3}Troubleshooting}{4}
+\contentsline {section}{\numberline {4}User Interface}{5}
+\contentsline {subsection}{\numberline {4.1}KaFFPa}{5}
+\contentsline {subsection}{\numberline {4.2}KaFFPaE / KaBaPE}{6}
+\contentsline {subsection}{\numberline {4.3}Node Separators}{7}
+\contentsline {subsection}{\numberline {4.4}Label Propagation}{7}
+\contentsline {subsection}{\numberline {4.5}Graph Format Checker}{7}

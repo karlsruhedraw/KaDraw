@@ -5,6 +5,7 @@
 \usepackage{algorithmic}
 \usepackage{tabularx}
 \usepackage{algorithm}
+\usepackage{theorem}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{color}
@@ -69,18 +70,47 @@ linear systems successively. Since each right-hand side in this succession
 depends on the previous solution, many linear systems need
 to be solved until convergence.
 
-Within KaDraw we present a novel multilevel algorithm to compute a graph layout with respect to maxent-stress 
-that combines layout stress and entropy.
+Within KaDraw we present a novel multilevel algorithm, MulMent, to compute a graph layout with respect to maxent-stress.
 %
 As opposed to previous work, we do not solve the linear systems of the maxent-stress metric with a typical 
 numerical solver. Instead we use a simple local iterative scheme within a multilevel approach.
-To accelerate local optimization, we approximate long-range forces and use shared-memory parallelism.
-\vfill
-\pagebreak
+To accelerate local optimization, we approximate long-range forces and parallelism.
 
 \section{Graph Drawing Algorithms within KaDraw}
-We now give a rough overview over the algorithms implemented in our framework. For details on the algorithms, we refer the interested reader to the corresponding paper. 
-\subsection{MulMent}
+We now give a rough overview over the algorithms implemented in our framework. For details on the algorithms, we refer the interested reader to the corresponding paper~\cite{mulment}. 
+A successful (meta)heuristic for graph drawing (and other optimization problems on large graphs) is the multilevel approach. We employ it for maxent-stress optimization as well.
+A multilevel algorithm computes a sequence of increasingly coarse but structurally related graphs as abstractions of the original graph.
+Starting from a layout of the coarsest graph, incremental refinement steps using the previous layout as a scaffold eventually produce a layout of the entire input graph, where the refinement steps are fast due to the good initial layouts. 
+
+We briefly sketch our algorithmic 
+approach: The method for creating the graph hierarchy is based on fast graph clustering with 
+controllable cluster sizes~\cite{pcomplexnetworksviacluster}. 
+Each cluster computed on one hierarchy level is contracted into a new supervertex for the next level.
+After computing an initial layout on the coarsest hierarchy level, we improve the drawing 
+on each finer level by iterating the maxent-equation to solve the maxent-stress system 
+\begin{equation}
+	x_{u} \gets \frac{1}{\rho_{u}} \sum_{\{u,v\}\in E} w_{uv} \left(x_{v} + d_{uv} \frac{x_{u}-x_{v}}{\Vert x_{u}-x_{v}\Vert}\right) + \frac{\alpha}{\rho_{u}} \sum_{\{u,v\}\notin E} \frac{x_{u}-x_{v}}{\Vert x_{u}-x_{v}\Vert^{2}},
+\label{eq:stress-entropy-iter}
+\end{equation}
+where $\rho_{u}=\sum_{\{u,v\}\in E}w_{uv}$ and appropriately chosen weights and distances. 
+Additionally, this process exploits
+the hierarchy and draws vertices that are densely connected with each other (\ie which are in the same cluster) close to each other.
+Note that the local optimization algorithm presented above has a theoretical running time of $\mathcal{O}(n^2)$ per iteration.
+To speed this up, our algorithm uses approximations for the distances in the entropy term in Eq.~(\ref{eq:stress-entropy-iter}).
+We do this by taking the cluster structure computed during coarsening into account, \ie we use graphs and coordinates multiple levels beneath the current level under consideration to approximate the second summation in Eq.~(\ref{eq:stress-entropy-iter}). For more details, we refer the reader to the paper~\cite{mulment}.
+
+
+
+
+\paragraph{Shared-memory Parallelization.}
+%
+Our local optimization algorithms are shared-memory parallelized using OpenMP.
+An iteration of the local optimizer works as follows: Since new coordinates of the vertices in the same iteration can be computed independently, we use multiple threads to do so. 
+Parallelism is also used analogously when working on different levels for the distance approximations
+in the entropy term.
+
+
+
 \vfill
 \pagebreak
 \,
