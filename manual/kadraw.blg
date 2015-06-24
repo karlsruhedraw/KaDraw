@@ -1,0 +1,89 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: kadraw.aux
+The style file: plain.bst
+Database file #1: phdthesiscs.bib
+Database file #2: masterReferences.bib
+Database file #3: references.bib
+Repeated entry---line 9012 of file references.bib
+ : @conference{fiduccia1982lth
+ :                            ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 9101 of file references.bib
+ : @article{pothen1990partitioning
+ :                                ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 9266 of file references.bib
+ : @article{karypis1998fast
+ :                         ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 9434 of file references.bib
+ : @article{walshaw2004multilevel
+ :                               ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 9591 of file references.bib
+ : @incollection{Walshaw07
+ :                        ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 9737 of file references.bib
+ : @inproceedings{kaffpa
+ :                      ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 9912 of file references.bib
+ : @phdthesis{dissSchulz
+ :                      ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 9923 of file references.bib
+ : @unpublished{Scotch
+ :                    ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 9939 of file references.bib
+ : @unpublished{Chaco
+ :                   ,
+I'm skipping whatever remains of this entry
+Database file #4: Bibliography.bib
+Warning--I didn't find a database entry for "gpviaclustering14"
+Warning--I didn't find a database entry for "conductanceER"
+Warning--empty publisher in Walshaw07
+You've used 13 entries,
+            2118 wiz_defined-function locations,
+            627 strings with 6839 characters,
+and the built_in function-call counts, 4655 in all, are:
+= -- 490
+> -- 165
+< -- 7
++ -- 66
+- -- 52
+* -- 308
+:= -- 736
+add.period$ -- 43
+call.type$ -- 13
+change.case$ -- 64
+chr.to.int$ -- 0
+cite$ -- 14
+duplicate$ -- 194
+empty$ -- 378
+format.name$ -- 52
+if$ -- 1013
+int.to.chr$ -- 0
+int.to.str$ -- 13
+missing$ -- 10
+newline$ -- 68
+num.names$ -- 26
+pop$ -- 61
+preamble$ -- 1
+purify$ -- 52
+quote$ -- 0
+skip$ -- 148
+stack$ -- 0
+substring$ -- 346
+swap$ -- 63
+text.length$ -- 7
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 52
+warning$ -- 1
+while$ -- 49
+width$ -- 15
+write$ -- 148
+(There were 9 error messages)

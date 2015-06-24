@@ -1,0 +1,239 @@
+\documentclass[11pt]{article}
+\input{makros.tex}
+
+\usepackage[utf8]{inputenc}
+\usepackage{algorithmic}
+\usepackage{tabularx}
+\usepackage{algorithm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{fullpage}     
+\usepackage{latexsym}
+\usepackage{makeidx}
+\usepackage{multicol}
+\usepackage{numprint}
+\usepackage{t1enc}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage[left=2cm,top=1.5cm,right=2cm]{geometry}
+\npdecimalsign{.} % we want . not , in numbers
+
+\definecolor{mygrey}{gray}{0.75}
+\newcommand{\ie}{i.e.\ }
+\newcommand{\etal}{et~al.\ }
+\newcommand{\eg}{e.g.\ }
+\newcommand{\Id}[1]{\ensuremath{\text{{\sf #1}}}}
+
+\def\MdR{\ensuremath{\mathbb{R}}}
+\def\MdN{\ensuremath{\mathbb{N}}}
+\newcommand{\mytodo}[1]{{\color{blue}#1}}
+\newcommand{\sout}[1]{{\color{mygrey}#1}}
+
+\newcommand{\mytitle}{ {\color{red}KaDraw} v1.0 -- {\color{red}Ka}rlsruhe Graph {\color{red}Draw}ing \\ User Guide}
+\begin{document}
+\title{\mytitle}
+\author{Henning Meyerhenke, Martin Nöllenburg and Christian Schulz\\ 
+	\textit{Karlsruhe Institute of Technology (KIT)},
+	\textit{Karlsruhe, Germany} \\
+	\textit{Email: \{\url{meyerhenke}, \url{noellenburg}, \url{christian.schulz}\}\url{@kit.edu}} }
+\date{}
+
+\maketitle
+\begin{abstract}
+This paper severs as a user guide to the graph drawing framework KaDraw (Karlsruhe Graph Drawing). We give a rough overview of the techniques used within the framework and describe the user interface as well as the file formats used. 
+\end{abstract}
+
+\tableofcontents
+\thispagestyle{empty}
+
+\vfill
+\pagebreak
+\section{Introduction}
+Drawing large networks (or graphs) with hundreds of thousands of nodes and
+edges has a variety of relevant applications. One of them can be interactive visualization, which helps humans working on
+graph data to gain insights about the properties of the data. If a very large high-end display is not available for such
+purpose, a hierarchical approach allows the user to select an appropriate zoom level~\cite{abello-ask-06}.
+Moreover, drawings of large graphs can also be used as a preprocessing step in high-performance applications~\cite{Kirmani:2013:SPG:2503210.2503280}.
+
+One very promising class of layout algorithms in this context is based on the
+\emph{stress} of a graph. Such algorithms can for instance be used for drawing graphs with fixed
+distances between vertex pairs, provided \textit{a priori} in a distance matrix~\cite{gkn-gdsm-05}.
+%
+More recently, Gansner \etal~\cite{ghn-mmgl-13} proposed a similar model 
+that includes besides the stress an additional entropy term (hence its name \emph{maxent-stress}). 
+While still using shortest path distances, this model often results in more satisfactory layouts for large networks.
+The optimization problem can be cast as solving Laplacian 
+linear systems successively. Since each right-hand side in this succession 
+depends on the previous solution, many linear systems need
+to be solved until convergence.
+
+Within KaDraw we present a novel multilevel algorithm to compute a graph layout with respect to maxent-stress 
+that combines layout stress and entropy.
+%
+As opposed to previous work, we do not solve the linear systems of the maxent-stress metric with a typical 
+numerical solver. Instead we use a simple local iterative scheme within a multilevel approach.
+To accelerate local optimization, we approximate long-range forces and use shared-memory parallelism.
+\vfill
+\pagebreak
+
+\section{Graph Drawing Algorithms within KaDraw}
+We now give a rough overview over the algorithms implemented in our framework. For details on the algorithms, we refer the interested reader to the corresponding paper. 
+\subsection{MulMent}
+\vfill
+\pagebreak
+\,
+\pagebreak
+\section{Graph Format}
+\label{ss:graphformat}
+\subsection{Input File Format}
+The graph format used by our partitioning programs is the same as used by Metis \cite{karypis1998fast}, Chaco \cite{chaco} and the graph format that has been used during the 10th DIMACS Implementation Challenge on Graph Clustering and Partitioning. 
+The input graph has to be undirected, withoud self-loops and without parallel edges.
+
+To give a description of the graph format, we follow the description of the Metis 4.0 user guide very closely. A graph $G=(V,E)$ with $n$ vertices and $m$ edges is stored in a plain text file that contains $n+1$ lines (excluding comment lines). The first line contains information about the size and the type of the graph, while the remaining $n$ lines contain information for each vertex of $G$. Any line that starts with \% is a comment line and is skipped.
+
+The first line in the file contains either two integers, $n$ $m$, or three integers, $n$ $m$ $f$. The first two integers are the number of vertices $n$ and the number of undirected edges of the graph, respectively. Note that in determining the number of edges $m$, an edge between any pair of vertices $v$ and $u$ is counted \emph{only once} and not twice, \ie we do not count the edge $(v,u)$ from $(u,v)$ separately. The third integer $f$ is used to specify whether or not the graph has weights associated with its vertices, its edges or both. If the graph is unweighted then this parameter can be omitted. It should be set to $1$ if the graph has edge weights, 10 if the graph has node weights and 11 if the graph has edge and node weights.
+
+The remaining $n$ lines of the file store information about the actual structure of the graph. In particular, the $i$th line (again excluding comment lines) contains information about the $i$th vertex. Depending on the value of $f$, the information stored in each line is somewhat different. In the most general form (when $f=11$, \ie we have node and edge weights) each line has the following structure:
+\begin{center}
+       $c\, v_1\, w_1\, v_2\, w_2 \ldots v_k\, w_k$ 
+\end{center}
+where $c$ is the vertex weight associated with this vertex, $v_1, \ldots, v_k$ are the vertices adjacent to this vertex, and $w_1, \ldots, w_k$ are the weights of the edges. Note that the vertices are numbered starting from 1 (not from 0). Furthermore, the vertex-weights must be integers greater or equal to 0, whereas the edge-weights must be strictly greater than 0.
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=.8\textwidth]{example_graph.pdf}
+\end{center}
+
+\caption{An example graph and its representation in the graph format. The IDs of the vertices are drawn within the cycle, the vertex weight is shown next to the circle ({\color{red}red}) and the edge weight is plotted next to the edge ({\color{blue}blue}).}
+\label{fig:example}
+\end{figure}
+\subsection{Output File Formats}
+\subsubsection{Coordinate File}
+The output format of coordinates is basically a text file. 
+This file contains $n$ lines. 
+In each line the 2D-coordinate of the corresponding vertex is given, \ie line $i$ contains the coordinate of vertex $i$.
+\subsubsection{PDF/PNG files}
+If the output is a node separator then the same format as used for a partition is used. However, in this case the nodes of the separator get the block ID $k$ where as the other nodes maintain their original block id. 
+\subsection{Troubleshooting}
+KaDraw should not crash! If KaDraw crashes it is mostly due to the following reasons: the provided graph contains self-loops or parallel edges, there exists a forward edge but the backward edge is missing or the forward and backward edges have different weights, or the number of vertices or edges specified does not match the number of vertices or edges provided in the file.
+Please use the \emph{graphcheck} tool provided in our graph partitioning package to verify whether your graph has the right input format. If our graphcheck tool tells you that the graph that you provided has the correct format and KaDraw crashes anyway, please write us an email.
+
+\vfill
+\pagebreak
+\section{User Interface}
+KaHIP contains the following programs: kaffpa, kaffpaE, partition\_to\_vertex\_separator, graphchecker. To compile these programs you need to have Argtable, g++, OpenMPI and scons installed (we use argtable-2.10, g++-4.8.0, OpenMPI-1.4.1 and scons-1.2). Once you have that you can execute \emph{compile.sh} in the main folder of the release. When the process is finished the binaries can be found in the folder \emph{deploy}. We now explain the parameters of each of the programs briefly.
+\subsection{KaFFPa}
+\paragraph*{Description:} This is the multilevel graph partitioning program. 
+\paragraph*{Usage:\\} 
+
+
+\begin{tabular}{ll}
+kaffpa &   file -{}-k=<int> [-{}-help] [-{}-seed=<int>]  [-{}-preconfiguration=variant] [-{}-imbalance=<double>] \\
+       &  [-{}-time\_limit=<double>] [-{}-enforce\_balance] [-{}-input\_partition=<string>] \\
+       & [-{}-balance\_edges] [-{}-output\_filename=<string>]
+\end{tabular}
+                          
+\subsection*{Options:\\}
+
+\begin{tabularx}{\textwidth}{lX}
+  file                        & Path to graph file that you want to partition. \\
+  -{}-k=<int>                   & Number of blocks to partition the graph into. \\
+  -{}-help                      & Print help. \\
+  -{}-seed=<int>                & Seed to use for the random number generator. \\
+  -{}-preconfiguration=variant & Use a preconfiguration. (Default: eco) [strong| eco | fast | fastsocial| ecosocial| strongsocial ]. Strong should be used if quality is paramount, eco if you need a good tradeoff between partition quality and running time, and fast if partitioning speed is in your focus. Configurations with a social in their name should be used for social networks and web graphs. \\
+  -{}-imbalance=<double>        & Desired balance. Default: 3 (\%). \\
+  -{}-time\_limit=<double>      & Time limit in seconds s. The default value is set to 0s, \ie one partitioner call will be made. If you set a time limit $t$, kaffpa will repeatedly call the multilevel method until the time limit is reached and return the best solution found. \\
+  -{}-enforce\_balance          & Use this option only on graphs without vertex weights. If this option is enabled, kaffpa guarantees that the output partition is feasible, \ie fulfills the specified balance constraint. \\
+  -{}-balance\_edges          & Use this option to balance the edges among the blocks as well as the nodes. In this case node weights are set to $c(v)+\text{deg}_\omega(v)$ for a node $v\in V$ and the balance constraint is adapted accordingly. \\
+  -{}-input\_partition=<string> & You can specify an input partition. If you do so, KaFFPa will try to improve it.   \\
+  -{}-output\_filename=<string>               & Specify the output filename (default tmppartition\$k). \\
+\end{tabularx}
+\vfill
+\pagebreak
+\subsection{KaFFPaE / KaBaPE}
+\paragraph*{Description:} This is the distributed evolutionary algorithm to tackle the graph partitioning problem. It includes also the perfectly balance case $\epsilon=0$.
+\paragraph*{Usage:\\} 
+\begin{tabular}{ll}
+mpirun -n P kaffpaE & file -{}-k=<int> [-{}-help] [-{}-seed=<int>]  [-{}-preconfiguration=variant] [-{}-imbalance=<double>] \\
+                    & [-{}-time\_limit=<double>] [-{}-mh\_enable\_quickstart] [-{}-mh\_optimize\_communication\_volume]\\
+                    & [-{}-mh\_enable\_kabapE] [-{}-mh\_enable\_tabu\_search] [-{}-kabaE\_internal\_bal=<double>]\\ 
+                    & [-{}-input\_partition=<string>] [-{}-balance\_edges] [-{}-output\_filename=<string> ]
+\end{tabular}
+
+
+\subsection*{Options:\\} 
+\begin{tabularx}{\textwidth}{lX}
+  P                                     & Number of processes to use.  \\
+  file                        & Path to graph file that you want to partition. \\
+  -{}-k=<int>                             & Number of blocks to partition the graph into.\\
+  -{}-help                                & Print help. \\
+  -{}-seed=<int>                          & Seed to use for the random number generator. \\
+  -{}-preconfiguration=variant & Use a preconfiguration. (Default: strong) [strong | eco | fast | fastsocial | ecosocial | strongsocial ]. Strong should be used if quality is paramount, eco if you need a good tradeoff between partition quality and running time, and fast if partitioning speed is in your focus. Configurations with a social in their name should be used for social networks and web graphs.\\
+  -{}-imbalance=<double>                     & Desired balance. Default: 3 (\%).\\
+  -{}-time\_limit=<double>                & Time limit in seconds s. The default value is set to 0s, \ie one partitioner call will be made by each PE. In order to use combine operations you \emph{have to} set a time limit $t>0$. kaffpaE will return the best solution after the time limit is reached. A time limit $t=0$ means that the algorithm will only create the initial population. \\
+  -{}-mh\_enable\_quickstart              & Enables the quickstart option. In this case each PE creates a few partitions and these partitions are distributed among the PEs.\\
+  -{}-mh\_optimize\_communication\_volume & Modifies the fitness function of the evolutionary algorithm so that communication volume is optimized.\\
+  -{}-mh\_enable\_kabapE                  & Enables the combine operator of \emph{KaBaPE}.\\
+  -{}-mh\_enable\_tabu\_search            & Enables our version of combine operation by block matching.\\
+  -{}-kabaE\_internal\_bal=<double>       & The internal balance parameter for KaBaPE (Default: 0.01) (1 \%)\\
+  -{}-balance\_edges                      & Use this option to balance the edges among the blocks as well as the nodes. In this case node weights are set to $c(v)+\text{deg}_\omega(v)$ for a node $v\in V$ and the balance constraint is adapted accordingly. \\
+  -{}-input\_partition=<string> & You can specify an input partition. If you do so, KaFFPaE will try to improve it.  \\
+  -{}-output\_filename=<string>               & Specify the output filename (default tmppartition\$k). \\
+\end{tabularx}
+\vfill
+\pagebreak
+\subsection{Node Separators}
+\paragraph*{Description:} This is the program that computes a $k$-way vertex separator  given a $k$-way partition of the graph.
+\paragraph*{Usage:\\} 
+\begin{tabular}{ll}
+partition\_to\_vertex\_separator & file -{}-k=<int> -{}-input\_partition=<string> [-{}-help] [-{}-seed=<int>] [-{}-output\_filename]
+\end{tabular}
+\subsection*{Options:\\} 
+\begin{tabularx}{\textwidth}{lX}
+  file                       & Path to the graph file. \\
+  -{}-k=<int>                  & Number of blocks the graph is partitioned in by using the input partition. \\
+  -{}-input\_partition=<string>& Input partition to compute the vertex separator from. \\
+  -{}-help                     & Print help. \\
+  -{}-seed=<int>               & Seed to use for the random number generator. \\
+  -{}-output\_filename=<string>               & Specify the output filename (default tmpseparator). \\
+\end{tabularx}
+\subsection{Label Propagation}
+\paragraph*{Description:} This is the program that a size-constrained label propagation clustering.
+\paragraph*{Usage:\\} 
+\begin{tabular}{ll}
+label\_propagation & file [-{}-cluster\_upperbound=<int>] [-{}-label\_propagation\_iterations] [-{}-help] [-{}-seed=<int>]\\
+               & [-{}-output\_filename]
+\end{tabular}
+\subsection*{Options:\\} 
+\begin{tabularx}{\textwidth}{lX}
+  file                       & Path to the graph file. \\
+  -{}-cluster\_upperbound=<int>             &  Set a size-constraint on the size of a cluster. For example, specifying a value of 10 means that each cluster can have at most 10 vertices (or a weight of 10 if the graph is weighted). By default there is no size-constraint, so that each node can potentially be in on cluster.  \\
+  -{}-label\_propagation\_iterations=<int>  &   Set the number of label propgation iterations. The default value is 10. \\
+
+  -{}-help                     & Print help. \\
+  -{}-seed=<int>               & Seed to use for the random number generator. \\
+  -{}-output\_filename=<string>               & Specify the output filename (default tmpclustering). \\
+\end{tabularx}
+
+\subsection{Graph Format Checker}
+\paragraph*{Description:} This program checks if the graph specified in a given file is valid. 
+\paragraph*{Usage:\\} 
+\begin{tabular}{ll}
+graphchecker & file
+\end{tabular}
+\subsection*{Options:\\} 
+\begin{tabularx}{\textwidth}{lX}
+  file                       & Path to the graph file. \\
+\end{tabularx}
+
+\vfill
+\pagebreak
+\vfill
+\pagebreak
+\bibliographystyle{plain}
+\bibliography{phdthesiscs,masterReferences,references,Bibliography}
+\end{document}
+
+
