@@ -186,14 +186,11 @@ void burn_drawing::draw_graph( Config & config, graph_access & G) {
                                         HsvToRgb(hues[1], 0.8, .75, &r, &g, &b);
                                 } else {
                                         //interpolate
-                                        double final_hue = 0;
                                         double alpha = 0;
                                         if( distance > median ) {
                                                 alpha = (1.5*median - distance)/median;
-                                                final_hue = alpha*hues[2] + (1-alpha)*hues[1];
                                         } else {
                                                 alpha = (distance-0.5*median)/median;
-                                                final_hue = alpha*hues[0] + (1-alpha)*hues[1];
                                         }
                                         HsvToRgb(hues[2], 0.9, .5, &r, &g, &b);
                                 }

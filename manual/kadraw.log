@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.11.27)  24 JUN 2015 17:17
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.11.27)  24 JUN 2015 17:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -673,66 +673,45 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10.95> not available
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (14.25851pt too wide) in paragraph at lines 107--111
- \T1/ptm/b/n/10.95 Shared-memory Par-al-leliza-tion.[] \T1/ptm/m/n/10.95 Our lo
--cal op-ti-miza-tion al-go-rithms are shared-memory par-al-lelized us-ing OpenM
-P.
- []
-
-[2]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 120.
- <example_graph.pdf, id=20, 590.205pt x 309.155pt>
+
+<example_graph.pdf, id=20, 590.205pt x 309.155pt>
 File: example_graph.pdf Graphic file (type pdf)
  <use example_graph.pdf>
 Package pdftex.def Info: example_graph.pdf used on input line 136.
 (pdftex.def)             Requested size: 400.38872pt x 209.73201pt.
 
 [3 <./example_graph.pdf>] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 168--168
+Underfull \hbox (badness 10000) in paragraph at lines 169--169
 
  []
 
 [5]
-Overfull \hbox (22.37013pt too wide) in paragraph at lines 188--194
-[] 
+Underfull \hbox (badness 10000) in paragraph at lines 198--198
+
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 196--196
+Underfull \hbox (badness 10000) in paragraph at lines 220--220
 
  []
 
 [6]
-Overfull \hbox (22.46802pt too wide) in paragraph at lines 220--223
-[] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 223--223
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 239--239
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 256--256
+Underfull \hbox (badness 10000) in paragraph at lines 240--240
 
  []
 
 [7] (./kadraw.bbl) [8] (./kadraw.aux) ) 
 Here is how much of TeX's memory you used:
- 4287 strings out of 493304
- 56502 string characters out of 6139870
- 140615 words of memory out of 5000000
- 7603 multiletter control sequences out of 15000+600000
- 45112 words of font info for 70 fonts, out of 8000000 for 9000
+ 4285 strings out of 493304
+ 56478 string characters out of 6139870
+ 137615 words of memory out of 5000000
+ 7601 multiletter control sequences out of 15000+600000
+ 41824 words of font info for 68 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,12n,24p,770b,351s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,8n,24p,770b,351s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc
 /dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
@@ -745,7 +724,7 @@ st/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/urw/courier/ucrro8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
 utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on kadraw.pdf (8 pages, 148018 bytes).
+Output written on kadraw.pdf (8 pages, 143166 bytes).
 PDF statistics:
  89 PDF objects out of 1000 (max. 8388607)
  63 compressed objects within 1 object stream

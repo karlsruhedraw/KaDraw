@@ -60,7 +60,7 @@ int parse_parameters(int argn, char **argv,
         struct arg_dbl *intracluster_distance_factor         = arg_dbl0(NULL, "intracluster_distance_factor", NULL, "Factor for intracluster distance (default 1)");
         struct arg_dbl *general_distance_scaling_factor      = arg_dbl0(NULL, "general_distance_scaling_factor", NULL, "General factor for distance scaling.");
 
-        struct arg_lit *disable_scaling                      = arg_lit0(NULL, "disable_scaling","Disable scaling.");
+        //struct arg_lit *disable_scaling                      = arg_lit0(NULL, "disable_scaling","Disable scaling.");
         struct arg_lit *draw_cluster_first                   = arg_lit0(NULL, "draw_cluster_first","Draw each cluster first while keeping the others unpacked.");
         struct arg_int *num_threads                          = arg_int0(NULL, "num_threads", NULL, "Set the number of OMP threads.");
         struct arg_lit *draw_cluster_first_disable_fine_tune = arg_lit0(NULL, "draw_cluster_first_disable_fine_tune","Disable the n^2 step when drawing clustering first.");
@@ -82,9 +82,9 @@ int parse_parameters(int argn, char **argv,
         void* argtable[] = {
                 help, filename, 
 #ifndef MODE_GRAPHTOMTX
-                user_seed,
 #ifndef MODE_EVALUATOR 
 #ifndef MODE_DRAWFROMCOORDS                
+                user_seed,
                 preconfiguration, 
                 //label_propagation_iterations,
                 //maxent_inner_iter,
@@ -113,7 +113,7 @@ int parse_parameters(int argn, char **argv,
                 //print_final_distances,
                 compute_FSM,
                 compute_MEnt,
-                disable_scaling,
+                //disable_scaling,
 #endif
 #endif
 #ifdef MODE_EVALUATOR
@@ -125,6 +125,7 @@ int parse_parameters(int argn, char **argv,
 #ifdef MODE_DRAWFROMCOORDS
                 output_filename, 
                 coord_filename,
+                export_type,
 #endif
 #endif
 
@@ -237,10 +238,6 @@ int parse_parameters(int argn, char **argv,
 
         if(burn_coordinates_to_disk->count > 0)  {
                 config.burn_coordinates_to_disk = true;
-        }
-
-        if(disable_scaling->count > 0)  {
-                config.disable_scaling = true;
         }
 
         if(use_polar_coordinates) {

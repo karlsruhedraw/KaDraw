@@ -92,7 +92,7 @@ on each finer level by iterating the maxent-equation to solve the maxent-stress 
 	x_{u} \gets \frac{1}{\rho_{u}} \sum_{\{u,v\}\in E} w_{uv} \left(x_{v} + d_{uv} \frac{x_{u}-x_{v}}{\Vert x_{u}-x_{v}\Vert}\right) + \frac{\alpha}{\rho_{u}} \sum_{\{u,v\}\notin E} \frac{x_{u}-x_{v}}{\Vert x_{u}-x_{v}\Vert^{2}},
 \label{eq:stress-entropy-iter}
 \end{equation}
-where $\rho_{u}=\sum_{\{u,v\}\in E}w_{uv}$ and appropriately chosen weights and distances. 
+where $\rho_{u}=\sum_{\{u,v\}\in E}w_{uv}$ and appropriately chosen weights and distances are used. 
 Additionally, this process exploits
 the hierarchy and draws vertices that are densely connected with each other (\ie which are in the same cluster) close to each other.
 Note that the local optimization algorithm presented above has a theoretical running time of $\mathcal{O}(n^2)$ per iteration.
@@ -104,7 +104,7 @@ We do this by taking the cluster structure computed during coarsening into accou
 
 \paragraph{Shared-memory Parallelization.}
 %
-Our local optimization algorithms are shared-memory parallelized using OpenMP.
+Local optimization algorithms use shared-memory parallelism (OpenMP).
 An iteration of the local optimizer works as follows: Since new coordinates of the vertices in the same iteration can be computed independently, we use multiple threads to do so. 
 Parallelism is also used analogously when working on different levels for the distance approximations
 in the entropy term.
@@ -153,100 +153,84 @@ Please use the \emph{graphcheck} tool provided in our graph partitioning package
 \vfill
 \pagebreak
 \section{User Interface}
-KaHIP contains the following programs: kaffpa, kaffpaE, partition\_to\_vertex\_separator, graphchecker. To compile these programs you need to have Argtable, g++, OpenMPI and scons installed (we use argtable-2.10, g++-4.8.0, OpenMPI-1.4.1 and scons-1.2). Once you have that you can execute \emph{compile.sh} in the main folder of the release. When the process is finished the binaries can be found in the folder \emph{deploy}. We now explain the parameters of each of the programs briefly.
-\subsection{KaFFPa}
-\paragraph*{Description:} This is the multilevel graph partitioning program. 
+KaDraw contains the following programs: kadraw, graphchecker, evaluator, draw\_from\_coordinates. To compile these programs you need to have Argtable, g++, OpenMP and scons installed (we use argtable-2.10, g++-4.8.0 and scons-1.2). Once you have that you can execute \emph{compile.sh} in the main folder of the release. When the process is finished the binaries can be found in the folder \emph{deploy}. We now explain the parameters of each of the programs briefly.
+\subsection{KaDraw}
+\paragraph*{Description:} This is the multilevel graph drawing program. 
 \paragraph*{Usage:\\} 
 
-
 \begin{tabular}{ll}
-kaffpa &   file -{}-k=<int> [-{}-help] [-{}-seed=<int>]  [-{}-preconfiguration=variant] [-{}-imbalance=<double>] \\
-       &  [-{}-time\_limit=<double>] [-{}-enforce\_balance] [-{}-input\_partition=<string>] \\
-       & [-{}-balance\_edges] [-{}-output\_filename=<string>]
+kadraw &   [-{}-help] FILE [-{}-seed=<int>] [-{}-preconfiguration=VARIANT]  \\
+& [-{}-burn\_coordinates\_to\_disk] [-{}-burn\_image\_to\_disk] [-{}-output\_filename=<string>] \\ 
+& [-{}-image\_scale=<double>] [-{}-num\_threads=<int>] [-{}-export\_type=TYPE] [-{}-linewidth=<double>] \\ 
+& [-{}-compute\_FSM] [-{}-compute\_MEnt]
+
 \end{tabular}
                           
 \subsection*{Options:\\}
 
 \begin{tabularx}{\textwidth}{lX}
-  file                        & Path to graph file that you want to partition. \\
-  -{}-k=<int>                   & Number of blocks to partition the graph into. \\
-  -{}-help                      & Print help. \\
-  -{}-seed=<int>                & Seed to use for the random number generator. \\
-  -{}-preconfiguration=variant & Use a preconfiguration. (Default: eco) [strong| eco | fast | fastsocial| ecosocial| strongsocial ]. Strong should be used if quality is paramount, eco if you need a good tradeoff between partition quality and running time, and fast if partitioning speed is in your focus. Configurations with a social in their name should be used for social networks and web graphs. \\
-  -{}-imbalance=<double>        & Desired balance. Default: 3 (\%). \\
-  -{}-time\_limit=<double>      & Time limit in seconds s. The default value is set to 0s, \ie one partitioner call will be made. If you set a time limit $t$, kaffpa will repeatedly call the multilevel method until the time limit is reached and return the best solution found. \\
-  -{}-enforce\_balance          & Use this option only on graphs without vertex weights. If this option is enabled, kaffpa guarantees that the output partition is feasible, \ie fulfills the specified balance constraint. \\
-  -{}-balance\_edges          & Use this option to balance the edges among the blocks as well as the nodes. In this case node weights are set to $c(v)+\text{deg}_\omega(v)$ for a node $v\in V$ and the balance constraint is adapted accordingly. \\
-  -{}-input\_partition=<string> & You can specify an input partition. If you do so, KaFFPa will try to improve it.   \\
-  -{}-output\_filename=<string>               & Specify the output filename (default tmppartition\$k). \\
+  FILE                          & Path to graph file to draw.\\
+  --help                        & Print help. \\
+  --seed=<int>                  & Seed to use for the PRNG.\\
+  --preconfiguration=VARIANT    & Use a preconfiguration. (Default: fast) [strong|eco|fast].\\
+  --burn\_coordinates\_to\_disk & Save the coordinates in a file.\\
+  --burn\_image\_to\_disk       & Save the image in a file.\\
+  --export\_type=TYPE           & Specify export type. [pdf|png]\\
+  --output\_filename=<string>   & Output filename of the png/pdf file.\\
+  --image\_scale=<double>       & Set image scale manually.\\
+  --num\_threads=<int>          & Set the number of OMP threads (default: maximum available number used).\\
+  --linewidth=<double>          & Line width to use for drawing.\\
+  --compute\_FSM                & Enable computation of Full Stress Measure.\\
+  --compute\_MEnt               & Enable computation of MaxEnt-stress at a penalty level of 0.008.\\
 \end{tabularx}
 \vfill
 \pagebreak
-\subsection{KaFFPaE / KaBaPE}
-\paragraph*{Description:} This is the distributed evolutionary algorithm to tackle the graph partitioning problem. It includes also the perfectly balance case $\epsilon=0$.
+\subsection{Evaluator}
+\paragraph*{Description:} This program takes a graph and its coordinates and computes various performance metrics.
 \paragraph*{Usage:\\} 
+
 \begin{tabular}{ll}
-mpirun -n P kaffpaE & file -{}-k=<int> [-{}-help] [-{}-seed=<int>]  [-{}-preconfiguration=variant] [-{}-imbalance=<double>] \\
-                    & [-{}-time\_limit=<double>] [-{}-mh\_enable\_quickstart] [-{}-mh\_optimize\_communication\_volume]\\
-                    & [-{}-mh\_enable\_kabapE] [-{}-mh\_enable\_tabu\_search] [-{}-kabaE\_internal\_bal=<double>]\\ 
-                    & [-{}-input\_partition=<string>] [-{}-balance\_edges] [-{}-output\_filename=<string> ]
+evaluator &   [-{}-help] FILE [-{}-seed=<int>] [-{}-print\_final\_distances]  \\
+& [-{}-compute\_FSM] [-{}-compute\_MEnt] [--coordfilename=<string>]
+
 \end{tabular}
+                          
+\subsection*{Options:\\}
 
-
-\subsection*{Options:\\} 
 \begin{tabularx}{\textwidth}{lX}
-  P                                     & Number of processes to use.  \\
-  file                        & Path to graph file that you want to partition. \\
-  -{}-k=<int>                             & Number of blocks to partition the graph into.\\
-  -{}-help                                & Print help. \\
-  -{}-seed=<int>                          & Seed to use for the random number generator. \\
-  -{}-preconfiguration=variant & Use a preconfiguration. (Default: strong) [strong | eco | fast | fastsocial | ecosocial | strongsocial ]. Strong should be used if quality is paramount, eco if you need a good tradeoff between partition quality and running time, and fast if partitioning speed is in your focus. Configurations with a social in their name should be used for social networks and web graphs.\\
-  -{}-imbalance=<double>                     & Desired balance. Default: 3 (\%).\\
-  -{}-time\_limit=<double>                & Time limit in seconds s. The default value is set to 0s, \ie one partitioner call will be made by each PE. In order to use combine operations you \emph{have to} set a time limit $t>0$. kaffpaE will return the best solution after the time limit is reached. A time limit $t=0$ means that the algorithm will only create the initial population. \\
-  -{}-mh\_enable\_quickstart              & Enables the quickstart option. In this case each PE creates a few partitions and these partitions are distributed among the PEs.\\
-  -{}-mh\_optimize\_communication\_volume & Modifies the fitness function of the evolutionary algorithm so that communication volume is optimized.\\
-  -{}-mh\_enable\_kabapE                  & Enables the combine operator of \emph{KaBaPE}.\\
-  -{}-mh\_enable\_tabu\_search            & Enables our version of combine operation by block matching.\\
-  -{}-kabaE\_internal\_bal=<double>       & The internal balance parameter for KaBaPE (Default: 0.01) (1 \%)\\
-  -{}-balance\_edges                      & Use this option to balance the edges among the blocks as well as the nodes. In this case node weights are set to $c(v)+\text{deg}_\omega(v)$ for a node $v\in V$ and the balance constraint is adapted accordingly. \\
-  -{}-input\_partition=<string> & You can specify an input partition. If you do so, KaFFPaE will try to improve it.  \\
-  -{}-output\_filename=<string>               & Specify the output filename (default tmppartition\$k). \\
+  FILE                          & Path to graph file to evaluate.\\
+  --help                        & Print help. \\
+  --print\_final\_distances     & Print the final distances. \\
+  --compute\_FSM                & Enable computation of Full Stress Measure.\\
+  --compute\_MEnt               & Enable computation of MaxEnt-stress at a penalty level of 0.008.\\
+  --coordfilename=<string>      & Filename of input coordinates to evaluate. \\
 \end{tabularx}
+\subsection{DrawGraphFromCoordinates}
+\paragraph*{Description:} This program takes a graph and its coordinates and outputs a pdf/png file containing the drawn graph.
+\paragraph*{Usage:\\} 
+
+\begin{tabular}{ll}
+ draw\_from\_coordinates&   [-{}-help] FILE [-{}-export\_type=TYPE]  \\
+& [--coordfilename=<string>] [--output\_filename=<string>]
+
+
+
+\end{tabular}
+                          
+\subsection*{Options:\\}
+
+\begin{tabularx}{\textwidth}{lX}
+  FILE                          & Path to graph file to draw.\\
+  --help                        & Print help. \\
+  --export\_type=TYPE           & Specify export type. [pdf|png]\\
+  --output\_filename=<string>   & Output filename of the png/pdf file. \\
+  --coordfilename=<string>      & Filename of input coordinates to evaluate. \\
+\end{tabularx}
+
 \vfill
 \pagebreak
-\subsection{Node Separators}
-\paragraph*{Description:} This is the program that computes a $k$-way vertex separator  given a $k$-way partition of the graph.
-\paragraph*{Usage:\\} 
-\begin{tabular}{ll}
-partition\_to\_vertex\_separator & file -{}-k=<int> -{}-input\_partition=<string> [-{}-help] [-{}-seed=<int>] [-{}-output\_filename]
-\end{tabular}
-\subsection*{Options:\\} 
-\begin{tabularx}{\textwidth}{lX}
-  file                       & Path to the graph file. \\
-  -{}-k=<int>                  & Number of blocks the graph is partitioned in by using the input partition. \\
-  -{}-input\_partition=<string>& Input partition to compute the vertex separator from. \\
-  -{}-help                     & Print help. \\
-  -{}-seed=<int>               & Seed to use for the random number generator. \\
-  -{}-output\_filename=<string>               & Specify the output filename (default tmpseparator). \\
-\end{tabularx}
-\subsection{Label Propagation}
-\paragraph*{Description:} This is the program that a size-constrained label propagation clustering.
-\paragraph*{Usage:\\} 
-\begin{tabular}{ll}
-label\_propagation & file [-{}-cluster\_upperbound=<int>] [-{}-label\_propagation\_iterations] [-{}-help] [-{}-seed=<int>]\\
-               & [-{}-output\_filename]
-\end{tabular}
-\subsection*{Options:\\} 
-\begin{tabularx}{\textwidth}{lX}
-  file                       & Path to the graph file. \\
-  -{}-cluster\_upperbound=<int>             &  Set a size-constraint on the size of a cluster. For example, specifying a value of 10 means that each cluster can have at most 10 vertices (or a weight of 10 if the graph is weighted). By default there is no size-constraint, so that each node can potentially be in on cluster.  \\
-  -{}-label\_propagation\_iterations=<int>  &   Set the number of label propgation iterations. The default value is 10. \\
-
-  -{}-help                     & Print help. \\
-  -{}-seed=<int>               & Seed to use for the random number generator. \\
-  -{}-output\_filename=<string>               & Specify the output filename (default tmpclustering). \\
-\end{tabularx}
-
+\vfill
+\pagebreak
 \subsection{Graph Format Checker}
 \paragraph*{Description:} This program checks if the graph specified in a given file is valid. 
 \paragraph*{Usage:\\} 

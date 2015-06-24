@@ -8,8 +8,7 @@
 \contentsline {subsubsection}{\numberline {3.2.2}PDF/PNG files}{4}
 \contentsline {subsection}{\numberline {3.3}Troubleshooting}{4}
 \contentsline {section}{\numberline {4}User Interface}{5}
-\contentsline {subsection}{\numberline {4.1}KaFFPa}{5}
-\contentsline {subsection}{\numberline {4.2}KaFFPaE / KaBaPE}{6}
-\contentsline {subsection}{\numberline {4.3}Node Separators}{7}
-\contentsline {subsection}{\numberline {4.4}Label Propagation}{7}
-\contentsline {subsection}{\numberline {4.5}Graph Format Checker}{7}
+\contentsline {subsection}{\numberline {4.1}KaDraw}{5}
+\contentsline {subsection}{\numberline {4.2}Evaluator}{6}
+\contentsline {subsection}{\numberline {4.3}DrawGraphFromCoordinates}{6}
+\contentsline {subsection}{\numberline {4.4}Graph Format Checker}{7}
