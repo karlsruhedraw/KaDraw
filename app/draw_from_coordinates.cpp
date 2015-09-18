@@ -65,10 +65,10 @@ int main(int argn, char **argv) {
         graph_io::readGraphWeighted(G, graph_filename);
         graph_io::readCoordinates(G, config.coord_filename);
         std::cout << "io time: " << t.elapsed()  << std::endl;
-        std::cout <<  "now computing scaling factor and scaling"  << std::endl;
+        std::cout <<  "now computing sparse scaling factor and scaling"  << std::endl;
 
         quality_metrics qm;
-        double scaling_factor = qm.compute_fsm_scaling_factor_unit_weight(G);
+        double scaling_factor = qm.compute_sparse_scaling_factor_unit_weight(G);
         std::cout <<  "scaling factor is " <<  scaling_factor << std::endl;
 
         //scale coordinates
