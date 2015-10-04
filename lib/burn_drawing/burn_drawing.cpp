@@ -186,12 +186,12 @@ void burn_drawing::draw_graph( Config & config, graph_access & G) {
                                         HsvToRgb(hues[1], 0.8, .75, &r, &g, &b);
                                 } else {
                                         //interpolate
-                                        double alpha = 0;
-                                        if( distance > median ) {
-                                                alpha = (1.5*median - distance)/median;
-                                        } else {
-                                                alpha = (distance-0.5*median)/median;
-                                        }
+                                        //double alpha = 0;
+                                        //if( distance > median ) {
+                                                //alpha = (1.5*median - distance)/median;
+                                        //} else {
+                                                //alpha = (distance-0.5*median)/median;
+                                        //}
                                         HsvToRgb(hues[2], 0.9, .5, &r, &g, &b);
                                 }
                                 cairo_set_source_rgb(cr, r, g, b);
