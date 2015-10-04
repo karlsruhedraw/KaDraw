@@ -14,4 +14,5 @@ Before you can start you need to install the following software packages:
 Once you installed the packages, just type ./compile.sh.
 
 Then try 
+
 ./deploy/kadraw --burn_image_to_disk --export_type=pdf --output_filename=my.pdf examples/delaunay_n16.graph 
