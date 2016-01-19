@@ -151,6 +151,12 @@ int graph_io::readGraphWeighted(graph_access & G, std::string filename) {
         } else if (ew == 10) {
                 read_nw = true;
         }
+
+        if( read_nw || read_ew ) {
+                std::cout <<  "currently only unweighted graphs supported."  << std::endl;
+                exit(0);
+        }
+
         nmbEdges *= 2; //since we have forward and backward edges
         
         NodeID node_counter   = 0;
