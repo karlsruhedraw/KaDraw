@@ -1,0 +1,5 @@
+.DS_Store
+.idea
+build/
+cmake-build-*/
+extern/argtable2-13/

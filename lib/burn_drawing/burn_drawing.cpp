@@ -21,8 +21,8 @@
 
 // Draw the graph using the Cairo Library
 
-#include <cairo.h>
-#include <cairo-pdf.h>
+#include <cairo/cairo.h>
+#include <cairo/cairo-pdf.h>
 #include <algorithm>
 #include "burn_drawing.h"
 
