@@ -3,3 +3,5 @@
 build/
 cmake-build-*/
 extern/argtable2-13/
+my.pdf
+deploy/

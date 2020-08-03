@@ -93,3 +93,18 @@ add_library(libdrawit OBJECT ${LIBDRAWIT_FILES})
 add_executable(kadraw app/kadraw.cpp)
 add_dependencies(kadraw argtable2)
 target_link_libraries(kadraw libdrawit ${LIBARGTABLE} ${LIBCAIRO} gomp)
+
+add_executable(evaluator app/evaluator.cpp)
+add_dependencies(evaluator argtable2)
+target_link_libraries(evaluator libdrawit ${LIBARGTABLE} ${LIBCAIRO} gomp)
+target_compile_definitions(evaluator PRIVATE "-DMODE_EVALUATOR")
+
+add_executable(draw_from_coordinates app/draw_from_coordinates.cpp)
+add_dependencies(draw_from_coordinates argtable2)
+target_link_libraries(draw_from_coordinates libdrawit ${LIBARGTABLE} ${LIBCAIRO} gomp)
+target_compile_definitions(draw_from_coordinates PRIVATE "-DMODE_DRAWFROMCOORDS")
+
+add_executable(graphchecker app/graphchecker.cpp)
+add_dependencies(graphchecker argtable2)
+target_link_libraries(graphchecker ${LIBARGTABLE} gomp)
+target_compile_definitions(graphchecker PRIVATE "-DMODE_GRAPHCHECKER")

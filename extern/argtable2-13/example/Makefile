@@ -26,7 +26,7 @@
 #   $(CC) -c $(CFLAGS) -o xxx.o xxx.c
 
 
-CC        = gcc
+CC        = /opt/local/bin/gcc-mp-10
 #add the -static switch to CFLAGS to force static linking if desired
 CFLAGS    += -I/usr/local/include -g
 LDLIBS    += -largtable2
