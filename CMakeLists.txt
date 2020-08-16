@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 include(CheckCXXCompilerFlag)
 include(ExternalProject)
 
-project(KaDraw CXX)
+project(KaDraw C CXX)
 set(CMAKE_CXX_STANDARD 11)
 
 # if no build mode is specified build in release mode
@@ -55,16 +55,17 @@ if (OPTIMIZED_OUTPUT)
 endif ()
 
 # libargtable2
-ExternalProject_Add(argtable2
-        SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/extern/argtable2-13
-        BUILD_IN_SOURCE 1
-        CONFIGURE_COMMAND ./configure)
-find_library(LIBARGTABLE argtable2 ${CMAKE_CURRENT_SOURCE_DIR}/extern/argtable2-13/src/.libs/)
+#ExternalProject_Add(argtable2
+        #SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/extern/argtable2-13
+        #BUILD_IN_SOURCE 1
+        #CONFIGURE_COMMAND ./configure)
+#find_library(LIBARGTABLE argtable2 ${CMAKE_CURRENT_SOURCE_DIR}/extern/argtable2-13/src/.libs/)
 
 # cairo
 find_library(LIBCAIRO cairo REQUIRED)
 include_directories(${LIBCAIRO_INCLUDE_DIRS})
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/extern/argtable3-3.0.3)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib/tools)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib/drawing)
@@ -87,24 +88,21 @@ set(LIBDRAWIT_FILES
         lib/drawing/uncoarsening/complete_boundary.cpp
         lib/drawing/uncoarsening/local_optimizer.cpp
         lib/drawing/uncoarsening/partial_boundary.cpp
-        lib/burn_drawing/burn_drawing.cpp)
+        lib/burn_drawing/burn_drawing.cpp
+        extern/argtable3-3.0.3/argtable3.c)
 add_library(libdrawit OBJECT ${LIBDRAWIT_FILES})
 
-add_executable(kadraw app/kadraw.cpp)
-add_dependencies(kadraw argtable2)
-target_link_libraries(kadraw libdrawit ${LIBARGTABLE} ${LIBCAIRO} gomp)
+add_executable(kadraw app/kadraw.cpp $<TARGET_OBJECTS:libdrawit>)
+target_link_libraries(kadraw ${LIBCAIRO} gomp)
 
-add_executable(evaluator app/evaluator.cpp)
-add_dependencies(evaluator argtable2)
+add_executable(evaluator app/evaluator.cpp $<TARGET_OBJECTS:libdrawit>)
 target_link_libraries(evaluator libdrawit ${LIBARGTABLE} ${LIBCAIRO} gomp)
 target_compile_definitions(evaluator PRIVATE "-DMODE_EVALUATOR")
 
-add_executable(draw_from_coordinates app/draw_from_coordinates.cpp)
-add_dependencies(draw_from_coordinates argtable2)
+add_executable(draw_from_coordinates app/draw_from_coordinates.cpp $<TARGET_OBJECTS:libdrawit>)
 target_link_libraries(draw_from_coordinates libdrawit ${LIBARGTABLE} ${LIBCAIRO} gomp)
 target_compile_definitions(draw_from_coordinates PRIVATE "-DMODE_DRAWFROMCOORDS")
 
-add_executable(graphchecker app/graphchecker.cpp)
-add_dependencies(graphchecker argtable2)
+add_executable(graphchecker app/graphchecker.cpp  $<TARGET_OBJECTS:libdrawit>)
 target_link_libraries(graphchecker ${LIBARGTABLE} gomp)
 target_compile_definitions(graphchecker PRIVATE "-DMODE_GRAPHCHECKER")

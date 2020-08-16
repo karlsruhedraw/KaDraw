@@ -4,8 +4,8 @@ rm -rf deploy
 
 mkdir build
 cd build
-cmake ..
-make -j 4
+cmake ../ -DCMAKE_BUILD_TYPE=Release
+make -j 4 
 cd ..
 
 mkdir deploy
