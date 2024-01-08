@@ -1,7 +1,7 @@
 # KaDraw
 This is the open source graph drawing package KaDraw (Karlsruhe Graph Drawing).
 
-Main project site: http://algo2.iti.kit.edu/kadraw/
+Main project site: https://karlsruhedraw.github.io
 
 Required Software Packages
 =====
